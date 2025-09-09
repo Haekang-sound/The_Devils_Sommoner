@@ -15,8 +15,8 @@ AudioComponent::AudioComponent()
 /// 채널을 하나 만들고 오디오컴포넌트 벡터에 오브젝트를 추가
 void AudioComponent::Start()
 {
-	SoundManager::GetInstance().CreateChannel();
-	SoundManager::GetInstance().PushAudio(GetOwner());
+	SoundManager::GetInstance()->CreateChannel();
+	SoundManager::GetInstance()->PushAudio(GetOwner());
 }
 
 void AudioComponent::FixedUpdate(float dTime)
@@ -42,18 +42,18 @@ void AudioComponent::Release()
 
 void AudioComponent::SetSound(string filename)
 {
-	m_sounds.push_back(SoundManager::GetInstance().GetSound(filename));
+	m_sounds.push_back(SoundManager::GetInstance()->GetSound(filename));
 }
 
 void AudioComponent::PlaybackSFX(Sound* sound)
 {
-	SoundManager::GetInstance().PlaybackSFX(sound);
+	SoundManager::GetInstance()->PlaybackSFX(sound);
 }
 
 
 void AudioComponent::Play3DSFX(Sound* sound)
 {
-	SoundManager::GetInstance().Playback3D(sound);
+	SoundManager::GetInstance()->Playback3D(sound);
 }
 
 void AudioComponent::PlayAudio(Sound* sound, eTYPE type)
@@ -61,31 +61,31 @@ void AudioComponent::PlayAudio(Sound* sound, eTYPE type)
 	switch (static_cast<int>(type))
 	{
 	case SFX:
-		SoundManager::GetInstance().PlaySFX2(sound);
+		SoundManager::GetInstance()->PlaySFX2(sound);
 		break;
 	case SFXR:
-		SoundManager::GetInstance().PlaySFXR2(sound);
+		SoundManager::GetInstance()->PlaySFXR2(sound);
 		break;
 	case THREED:
-		SoundManager::GetInstance().Play3D2(sound);
+		SoundManager::GetInstance()->Play3D2(sound);
 		break;
 	case BLIND:
-		SoundManager::GetInstance().PlayBlind2(sound);
+		SoundManager::GetInstance()->PlayBlind2(sound);
 		break;
 	case JANE:
-		SoundManager::GetInstance().PlayJane2(sound);
+		SoundManager::GetInstance()->PlayJane2(sound);
 		break;
 	case CHASER:
-		SoundManager::GetInstance().PlayChaser2(sound);
+		SoundManager::GetInstance()->PlayChaser2(sound);
 		break;
 	case GHOST:
-		SoundManager::GetInstance().PlayGhost2(sound);
+		SoundManager::GetInstance()->PlayGhost2(sound);
 		break;
 	case DOOR:
-		SoundManager::GetInstance().PlayDoor1(eSOUNDKIND::fDoor);
+		SoundManager::GetInstance()->PlayDoor1(eSOUNDKIND::fDoor);
 		break;
 	case DEMON:
-		SoundManager::GetInstance().PlayDemon();
+		SoundManager::GetInstance()->PlayDemon();
 		break;
 	default:
 		break;

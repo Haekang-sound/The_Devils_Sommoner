@@ -42,13 +42,6 @@ public:
 	void SetOnHover(std::function<void(void)> onHover);
 	void SetOnNormal(std::function<void(void)> onNormal);
 
-	//버튼의 사이즈와 위치를 정해줘야할 듯
-	void SetButtonPos(RECT pos);
-
-public:
-	RECT m_pos; // left, top, right, bottom
-
-	int testint = 0;
 
 private:
 	std::function<void(void)> m_onClick = []() {};	// 람다를 이용해서 기본값을 넣어주자

@@ -36,7 +36,10 @@ void StaminaUI::Update(float dTime)
 
 
 	//std::cout << "스테미나 : " << stamina << ", obID : " << GetOwner()->GetObjectManager()->GetOBjectsByComponent<PlayerComponent>()->GetObjectID() << std::endl;
-	m_sprite->SetSize({ 100 * (stamina/maxStamina), 100});
+	m_sprite->SetPosX( 690 + (270 * (1-(stamina/maxStamina))));
+	m_sprite->SetSize({ 540 * (stamina / maxStamina),64 });
+
+	//m_transform->SetLocalScale({ (stamina / maxStamina),1,1 });
 }
 
 void StaminaUI::LateUpdate(float dTime)

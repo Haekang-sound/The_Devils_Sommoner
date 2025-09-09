@@ -94,7 +94,7 @@ void PlayerComponent::Update(float dTime)
 
 	if (m_staminaCoolTime > 2.f && m_stamina > 0.f)
 	{
-		SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetDoor39Channel());
+		SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetDoor39Channel());
 
 		if (InputManager::GetInstance()->m_Keyboard.IsKeyHold(Keyboard::LeftShift)
 			&& InputManager::GetInstance()->m_Keyboard.IsKeyHold(Keyboard::W))
@@ -109,8 +109,8 @@ void PlayerComponent::Update(float dTime)
 	{
 		if (!m_isExhausted)
 		{
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetDoor39Channel());
-			SoundManager::GetInstance().PlayDoor39(eSOUNDKIND::lExhausted);
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetDoor39Channel());
+			SoundManager::GetInstance()->PlayDoor39(eSOUNDKIND::lExhausted);
 			m_isExhausted = true;
 		}
 		m_isStaminaZero = true;

@@ -670,147 +670,147 @@ void SoundManager::DoorOpen(int index)
 	{
 	case 4:
 		PlayDoor4(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor4Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor4Channel());
 		break;
 	case 5:
 		PlayDoor5(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor5Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor5Channel());
 		break;
 	case 6:
 		PlayDoor6(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor6Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor6Channel());
 		break;
 	case 7:
 		PlayDoor7(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor7Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor7Channel());
 		break;
 	case 8:
 		PlayDoor8(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor8Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor8Channel());
 		break;
 	case 9:
 		PlayDoor9(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor9Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor9Channel());
 		break;
 	case 10:
 		PlayDoor10(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor10Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor10Channel());
 		break;
 	case 11:
 		PlayDoor11(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor11Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor11Channel());
 		break;
 	case 12:
 		PlayDoor12(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor12Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor12Channel());
 		break;
 	case 13:
 		PlayDoor13(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor13Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor13Channel());
 		break;
 	case 14:
 		PlayDoor14(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor14Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor14Channel());
 		break;
 	case 15:
 		PlayDoor15(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor15Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor15Channel());
 		break;
 	case 16:
 		PlayDoor16(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor16Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor16Channel());
 		break;
 	case 17:
 		PlayDoor17(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor17Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor17Channel());
 		break;
 	case 18:
 		PlayDoor18(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor18Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor18Channel());
 		break;
 	case 19:
 		PlayDoor19(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor19Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor19Channel());
 		break;
 	case 20:
 		PlayDoor20(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor20Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor20Channel());
 		break;
 	case 21:
 		PlayDoor21(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor21Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor21Channel());
 		break;
 	case 22:
 		PlayDoor22(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor22Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor22Channel());
 		break;
 	case 23:
 		PlayDoor23(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor23Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor23Channel());
 		break;
 	case 24:
 		PlayDoor24(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor24Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor24Channel());
 		break;
 	case 25:
 		PlayDoor25(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor25Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor25Channel());
 		break;
 	case 26:
 		PlayDoor26(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor26Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor26Channel());
 		break;
 	case 27:
 		PlayDoor27(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor27Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor27Channel());
 		break;
 	case 28:
 		PlayDoor28(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor28Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor28Channel());
 		break;
 	case 29:
 		PlayDoor29(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor29Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor29Channel());
 		break;
 	case 30:
 		PlayDoor30(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor30Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor30Channel());
 		break;
 	case 31:
 		PlayDoor31(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor31Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor31Channel());
 		break;
 	case 32:
 		PlayDoor32(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor32Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor32Channel());
 		break;
 	case 33:
 		PlayDoor33(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor33Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor33Channel());
 		break;
 	case 34:
 		PlayDoor34(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor34Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor34Channel());
 		break;
 	case 35:
 		PlayDoor35(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor35Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor35Channel());
 		break;
 	case 36:
 		PlayDoor36(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor36Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor36Channel());
 		break;
 	case 37:
 		PlayDoor37(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor37Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor37Channel());
 		break;
 	case 38:
 		PlayDoor38(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor38Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor38Channel());
 		break;
 	case 39:
 		PlayDoor39(eSOUNDKIND::fDoor);
-		AddReverb(SoundManager::GetInstance().GetDoor39Channel());
+		AddReverb(SoundManager::GetInstance()->GetDoor39Channel());
 		break;
 	default:
 		break;
@@ -823,147 +823,147 @@ void SoundManager::DoorClose(int index)
 	{
 	case 4:
 		PlayDoor4(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor4Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor4Channel());
 		break;
 	case 5:
 		PlayDoor5(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor5Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor5Channel());
 		break;
 	case 6:
 		PlayDoor6(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor6Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor6Channel());
 		break;
 	case 7:
 		PlayDoor7(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor7Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor7Channel());
 		break;
 	case 8:
 		PlayDoor8(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor8Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor8Channel());
 		break;
 	case 9:
 		PlayDoor9(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor9Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor9Channel());
 		break;
 	case 10:
 		PlayDoor10(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor10Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor10Channel());
 		break;
 	case 11:
 		PlayDoor11(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor11Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor11Channel());
 		break;
 	case 12:
 		PlayDoor12(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor12Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor12Channel());
 		break;
 	case 13:
 		PlayDoor13(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor13Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor13Channel());
 		break;
 	case 14:
 		PlayDoor14(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor14Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor14Channel());
 		break;
 	case 15:
 		PlayDoor15(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor15Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor15Channel());
 		break;
 	case 16:
 		PlayDoor16(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor16Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor16Channel());
 		break;
 	case 17:
 		PlayDoor17(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor17Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor17Channel());
 		break;
 	case 18:
 		PlayDoor18(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor18Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor18Channel());
 		break;
 	case 19:
 		PlayDoor19(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor19Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor19Channel());
 		break;
 	case 20:
 		PlayDoor20(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor20Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor20Channel());
 		break;
 	case 21:
 		PlayDoor21(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor21Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor21Channel());
 		break;
 	case 22:
 		PlayDoor22(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor22Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor22Channel());
 		break;
 	case 23:
 		PlayDoor23(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor23Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor23Channel());
 		break;
 	case 24:
 		PlayDoor24(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor24Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor24Channel());
 		break;
 	case 25:
 		PlayDoor25(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor25Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor25Channel());
 		break;
 	case 26:
 		PlayDoor26(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor26Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor26Channel());
 		break;
 	case 27:
 		PlayDoor27(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor27Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor27Channel());
 		break;
 	case 28:
 		PlayDoor28(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor28Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor28Channel());
 		break;
 	case 29:
 		PlayDoor29(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor29Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor29Channel());
 		break;
 	case 30:
 		PlayDoor30(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor30Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor30Channel());
 		break;
 	case 31:
 		PlayDoor31(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor31Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor31Channel());
 		break;
 	case 32:
 		PlayDoor32(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor32Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor32Channel());
 		break;
 	case 33:
 		PlayDoor33(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor33Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor33Channel());
 		break;
 	case 34:
 		PlayDoor34(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor34Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor34Channel());
 		break;
 	case 35:
 		PlayDoor35(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor35Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor35Channel());
 		break;
 	case 36:
 		PlayDoor36(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor36Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor36Channel());
 		break;
 	case 37:
 		PlayDoor37(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor37Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor37Channel());
 		break;
 	case 38:
 		PlayDoor38(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor38Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor38Channel());
 		break;
 	case 39:
 		PlayDoor39(eSOUNDKIND::fClose);
-		//AddReverb(SoundManager::GetInstance().GetDoor39Channel());
+		//AddReverb(SoundManager::GetInstance()->GetDoor39Channel());
 		break;
 	default:
 		break;

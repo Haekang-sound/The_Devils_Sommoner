@@ -54,7 +54,7 @@ void Blind::Start()
 	m_altar = GameManager::GetInstance()->GetAltarObject();
 
 	/// 추격 사운드를 위해서
-	SoundManager::GetInstance().PushEnemy(GetOwner());
+	SoundManager::GetInstance()->PushEnemy(GetOwner());
 }
 
 void Blind::FixedUpdate(float dTime)
@@ -87,8 +87,8 @@ void Blind::Update(float dTime)
 		if (!m_isWalk)
 		{
 			// 처음 이 상태에 들어오면 walk재생하고 bool값 변경
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBlindChannel());
-			SoundManager::GetInstance().PlayBlind(eSOUNDKIND::lBlindWalk);
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBlindChannel());
+			SoundManager::GetInstance()->PlayBlind(eSOUNDKIND::lBlindWalk);
 			m_isWalk = true;
 			m_isChase = false;
 			m_isAttack = false;
@@ -151,13 +151,13 @@ void Blind::Update(float dTime)
 				//std::cout << "Walk To Chase" << std::endl;
 				if (!m_isChasing)
 				{
-					SoundManager::GetInstance().PlaySFX(eSOUNDKIND::fSpotted);
+					SoundManager::GetInstance()->PlaySFX(eSOUNDKIND::fSpotted);
 					m_isChasing = true;
 				}
-				if (!SoundManager::GetInstance().GetChase())
+				if (!SoundManager::GetInstance()->GetChase())
 				{
-					SoundManager::GetInstance().PlayBGMC(eSOUNDKIND::bChased);
-					SoundManager::GetInstance().DoChase();
+					SoundManager::GetInstance()->PlayBGMC(eSOUNDKIND::bChased);
+					SoundManager::GetInstance()->DoChase();
 				}
 				m_nextState = EnemyState::Chase;
 
@@ -183,11 +183,11 @@ void Blind::Update(float dTime)
 					if (hit->GetOwner()->GetName() == "Player")
 					{
 						//std::cout << "Walk To Chase" << std::endl;
-						SoundManager::GetInstance().PlaySFX(eSOUNDKIND::fSpotted);
-						if (!SoundManager::GetInstance().GetChase())
+						SoundManager::GetInstance()->PlaySFX(eSOUNDKIND::fSpotted);
+						if (!SoundManager::GetInstance()->GetChase())
 						{
-							SoundManager::GetInstance().PlayBGMC(eSOUNDKIND::bChased);
-							SoundManager::GetInstance().DoChase();
+							SoundManager::GetInstance()->PlayBGMC(eSOUNDKIND::bChased);
+							SoundManager::GetInstance()->DoChase();
 						}
 						m_nextState = EnemyState::Chase;
 					}
@@ -241,8 +241,8 @@ void Blind::Update(float dTime)
 		/// Chase상태라면
 		if (!m_isChase)
 		{
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBlindChannel());
-			SoundManager::GetInstance().PlayBlind(eSOUNDKIND::lBlindRun);
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBlindChannel());
+			SoundManager::GetInstance()->PlayBlind(eSOUNDKIND::lBlindRun);
 			m_isWalk = false;
 			m_isChase = true;
 			m_isAttack = false;
@@ -348,12 +348,12 @@ void Blind::Update(float dTime)
 					{
 						//std::cout << "Chase To Walk" << std::endl;
 						if (	 m_isChasing &&
-							(SoundManager::GetInstance().GetEnemyComps()[1]->GetComponent<EnemyComponent>()->GetEnemyState() == EnemyState::Walk) ||
-							(SoundManager::GetInstance().GetEnemyComps()[1]->GetComponent<EnemyComponent>()->GetEnemyState() == EnemyState::Dead))
+							(SoundManager::GetInstance()->GetEnemyComps()[1]->GetComponent<EnemyComponent>()->GetEnemyState() == EnemyState::Walk) ||
+							(SoundManager::GetInstance()->GetEnemyComps()[1]->GetComponent<EnemyComponent>()->GetEnemyState() == EnemyState::Dead))
 						{
-							SoundManager::GetInstance().PlaySFX(eSOUNDKIND::fEscaped);
-							SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBGMCChannel());
-							SoundManager::GetInstance().DoEscape();
+							SoundManager::GetInstance()->PlaySFX(eSOUNDKIND::fEscaped);
+							SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBGMCChannel());
+							SoundManager::GetInstance()->DoEscape();
 							m_isChasing = false;
 						}
 						m_nextState = EnemyState::Walk;
@@ -406,7 +406,7 @@ void Blind::Update(float dTime)
 				/// 재생 중이던 채널의 사운드를 일단 중지
 				if (!m_isAttack)
 				{
-					SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBlindChannel());
+					SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBlindChannel());
 					m_isAttack = true;
 					m_isChase = false;
 					m_isWalk = false;
@@ -420,12 +420,12 @@ void Blind::Update(float dTime)
 					if (hit->GetOwner()->GetName() == "Player")
 					{
 						// 공격 사운드
-						SoundManager::GetInstance().PlayBlind(eSOUNDKIND::fBlindAttack);
+						SoundManager::GetInstance()->PlayBlind(eSOUNDKIND::fBlindAttack);
 						//std::cout << "Attack" << std::endl;
 
 						hit->GetOwner()->GetComponent<PlayerComponent>()
 							->SetHp(m_player->GetComponent<PlayerComponent>()->GetHp() - m_damage);
-						SoundManager::GetInstance().PlaySFX(eSOUNDKIND::fPhit);
+						SoundManager::GetInstance()->PlaySFX(eSOUNDKIND::fPhit);
 						// 시작점
 						SimpleMath::Vector3 enemyPos = m_pOwner->GetComponent<Transform>()->GetPosition();
 						// 플레이어 방향으로 레이 발사
@@ -500,11 +500,11 @@ void Blind::Update(float dTime)
 		m_model->GetComponent<MeshRenderer>()->SetAnimationState(1);
 
 		/// 스턴 하면 일시 중지
-		SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBlindChannel());
+		SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBlindChannel());
 		if (!m_isKnifeSound)
 		{
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBlindChannel());
-			SoundManager::GetInstance().PlayBlind(eSOUNDKIND::fEnemyHit);
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBlindChannel());
+			SoundManager::GetInstance()->PlayBlind(eSOUNDKIND::fEnemyHit);
 			m_isKnifeSound = true;
 		}
 
@@ -533,12 +533,12 @@ void Blind::Update(float dTime)
 			//std::cout << "Stun To Walk" << std::endl;
 			
 			if (	 m_isChasing &&
-				(SoundManager::GetInstance().GetEnemyComps()[1]->GetComponent<EnemyComponent>()->GetEnemyState() == EnemyState::Walk) ||
-				(SoundManager::GetInstance().GetEnemyComps()[1]->GetComponent<EnemyComponent>()->GetEnemyState() == EnemyState::Dead))
+				(SoundManager::GetInstance()->GetEnemyComps()[1]->GetComponent<EnemyComponent>()->GetEnemyState() == EnemyState::Walk) ||
+				(SoundManager::GetInstance()->GetEnemyComps()[1]->GetComponent<EnemyComponent>()->GetEnemyState() == EnemyState::Dead))
 			{
-				SoundManager::GetInstance().PlaySFX(eSOUNDKIND::fEscaped);
-				SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBGMCChannel());
-				SoundManager::GetInstance().DoEscape();
+				SoundManager::GetInstance()->PlaySFX(eSOUNDKIND::fEscaped);
+				SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBGMCChannel());
+				SoundManager::GetInstance()->DoEscape();
 				m_isChasing = false;
 			}
 			m_nextState = EnemyState::Walk;
@@ -562,10 +562,10 @@ void Blind::Update(float dTime)
 		// 사망 사운드
 		if (!m_isDead)
 		{
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBlindChannel());
-			SoundManager::GetInstance().PlayBlind(eSOUNDKIND::fMaleScream);
-			SoundManager::GetInstance().AddReverb(SoundManager::GetInstance().GetBlindChannel());
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBGMCChannel());
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBlindChannel());
+			SoundManager::GetInstance()->PlayBlind(eSOUNDKIND::fMaleScream);
+			SoundManager::GetInstance()->AddReverb(SoundManager::GetInstance()->GetBlindChannel());
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBGMCChannel());
 
 			m_isDead = true;
 		}

@@ -599,8 +599,11 @@ void DX11Device::CreateVS(std::wstring _path, ComPtr<ID3D11VertexShader>* _VS, c
 
 	std::wstring csoPath = path + L"CSO\\" + _path + L".cso";
 #ifdef CompileCSO
-	//csoPath = L"..\\Libraries\\DebugLib\\Graphics\\" + _path + L".cso";
+#ifdef _DEBUG
 	csoPath = L"..\\Libraries\\DebugLib\\Graphics\\" + _path + L".cso";
+#else
+	csoPath = L"..\\Libraries\\ReleaseLib\\Graphics\\" + _path + L".cso";
+#endif
 	if (FAILED(hr = D3DReadFileToBlob(csoPath.c_str(), &shaderBuffer)))
 #endif
 	{
@@ -662,7 +665,11 @@ void DX11Device::CreatePS(std::wstring _path, ComPtr<ID3D11PixelShader>* _PS)
 
 	std::wstring csoPath = path + L"CSO\\" + _path + L".cso";
 #ifdef CompileCSO
+#ifdef _DEBUG
 	csoPath = L"..\\Libraries\\DebugLib\\Graphics\\" + _path + L".cso";
+#else
+	csoPath = L"..\\Libraries\\ReleaseLib\\Graphics\\" + _path + L".cso";
+#endif
 	if (FAILED(hr = D3DReadFileToBlob(csoPath.c_str(), &shaderBuffer)))
 #endif // CompileCSO
 	{

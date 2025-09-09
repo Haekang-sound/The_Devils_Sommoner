@@ -4,6 +4,14 @@
 #include "../Libraries/DXTK/Inc/Keyboard.h"
 #include "../Libraries/DXTK/Inc/Mouse.h"
 
+#define _DX
+
+#ifdef _DX
+#define DX(x) x
+#else
+#define DX(x)
+#endif // 
+
 
 
 class InputManager : public SingleTon<InputManager>
@@ -12,6 +20,9 @@ public:
 	void Init(HWND _hWnd);
 	void Finalize();
 	void Update();
+
+public:
+	void SetMouseMode(bool _IsRalative);
 
 private:
 	class Keyboard : public DirectX::Keyboard::KeyboardStateTracker
@@ -25,6 +36,7 @@ private:
 
 	class Mouse : public DirectX::Mouse::ButtonStateTracker
 	{
+		friend class InputManager;
 	public:
 
 		bool __cdecl IsButtonDown(ButtonState _bs) const noexcept;
@@ -34,27 +46,32 @@ private:
 		bool __cdecl IsButtonUp(ButtonState _bs) const noexcept;
 
 		bool __cdecl IsButtonHover(ButtonState _bs) const noexcept;
+	private:
+		
+		void MouseMove(bool _IsRelative);
 
-		void MouseMove();
+	public:
+		float m_PosX, m_PosY;
+		float m_NormalPosX, m_NormalPosY;
 
-		bool isMove = false;
-		int moveX = 0;
-		int moveY = 0;
+	private:
+		
 
-		DirectX::Mouse::State prev;
-		bool isMouseCenter = false;
+		DirectX::Mouse::State m_Curr;
+		DirectX::Mouse::State m_Prev;
+
+		HWND m_hWnd;
 	};
 
 public:
 	Keyboard m_Keyboard;
 	Mouse m_Mouse;
-	// DirectX::Keyboard::KeyboardStateTracker m_Keyboard;
-	RECT windowRect;
-	RECT clientRect;
+
+
 
 private:
 	HWND m_hWnd;
-
+	bool m_IsMouseRelative;
 
 private:
 
@@ -63,76 +80,3 @@ private:
 	std::unique_ptr<DirectX::Mouse> m_pMouseData;
 
 };
-
-// 
-// enum class KeyType
-// {
-// 	LeftMouse = VK_LBUTTON,
-// 	RightMouse = VK_RBUTTON,
-// 
-// 	Up = VK_UP,
-// 	Down = VK_DOWN,
-// 	Left = VK_LEFT,
-// 	Right = VK_RIGHT,
-// 	SpaceBar = VK_SPACE,
-// 
-// 	W = 'W',
-// 	A = 'A',
-// 	S = 'S',
-// 	D = 'D',
-// 
-// 	Q = 'Q',
-// 	E = 'E',
-// 
-// 	Esc = VK_ESCAPE
-// };
-// 
-// enum class KeyState
-// {
-// 	None,
-// 	Press,
-// 	Down,
-// 	Up,
-// 
-// 	End
-// };
-// 
-// enum
-// {
-// 	KEY_TYPE_COUNT = static_cast<__int32>(UINT8_MAX) + 1,
-// 	KEY_STATE_COUNT = static_cast<__int32>(KeyState::End)
-// };
-// 
-// class InputManager
-// {
-// public:
-// 	InputManager();
-// 	~InputManager();
-// 
-// public:
-// 	void Init(HWND hwnd);
-// 	void Update();
-// 
-// 	// 누르고 있을 때
-// 	bool GetButton(KeyType key ) { return GetState(key) == KeyState::Press; }
-// 
-// 	// 맨 처음 눌렀을 때
-// 	bool GetButtonDown(KeyType key) { return GetState(key) == KeyState::Down; }
-// 
-// 	// 맨 처음 눌렀다가 땔 때
-// 	bool GetButtonUp(KeyType key) { return GetState(key) == KeyState::Up; }
-// 
-// 	POINT GetMousePos() { return m_mousePos; }
-// 
-// private:
-// 	KeyState GetState(KeyType key) 
-// 	{
-// 		return  m_states[static_cast<unsigned __int8>(key)]; 
-// 	}
-// 
-// private:
-// 	HWND m_hwnd = 0;
-// 	std::vector<KeyState> m_states;
-// 	POINT m_mousePos;
-// };
-

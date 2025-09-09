@@ -22,6 +22,7 @@ public:
 
 	// 창 변환 관련
 	virtual void SetClientSize(int width, int height) abstract;
+	virtual Vector2 GetClientSize() abstract;
 	virtual void OnResize() abstract;
 	virtual void OnResize(int screenWidth, int screenHeight) abstract;
 	virtual bool IsValidDevice() abstract;

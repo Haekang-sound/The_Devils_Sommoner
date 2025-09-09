@@ -82,7 +82,6 @@ TitleScene::~TitleScene()
 
 void TitleScene::EditScene(EngineResourceManager* resourceManager, EngineObjectManager* objManager, TimeManager* timeManager, CollisionDetectManager* collisionDetectManager, PhysicsManager* physicsManager)
 {
-	ShowCursor(false);
 	// Scene 생성에 필요한 매니저 이식
 	m_resourceManager = resourceManager;
 	m_objManager = objManager;
@@ -104,8 +103,8 @@ void TitleScene::EditScene(EngineResourceManager* resourceManager, EngineObjectM
 		//m_object->GetComponent<Transform>()->SetLocalPosition({ 0.f,0.f,-1000.f });
 
 		RECT spriteRect;
-		spriteRect.left = 700;
-		spriteRect.top = -500;
+		spriteRect.left = 1650;
+		spriteRect.top = 850;
 		spriteRect.bottom = 0;
 		spriteRect.right = 0;
 
@@ -125,8 +124,8 @@ void TitleScene::EditScene(EngineResourceManager* resourceManager, EngineObjectM
 		m_object->AddComponent<Timer, SpriteRenderer>();
 
 		RECT rect;
-		rect.left = -300;
-		rect.top = 150;
+		rect.left = 660;
+		rect.top = 200;
 		rect.bottom = 0;
 		rect.right = 0;
 
@@ -160,8 +159,8 @@ void TitleScene::EditScene(EngineResourceManager* resourceManager, EngineObjectM
 		m_object->AddComponent<Button, SpriteRenderer>();
 
 		RECT rect;
-		rect.left = -10;
-		rect.top = 10;
+		rect.left = 950;
+		rect.top = 550;
 		rect.bottom = 0;
 		rect.right = 0;
 
@@ -182,18 +181,18 @@ void TitleScene::EditScene(EngineResourceManager* resourceManager, EngineObjectM
 		m_object->AddComponent<SpriteRenderer, StaminaUI>();
 
 		RECT rect;
-		rect.left = -1920 / 2 + 100;
-		rect.top = -600;
+		rect.left =690;
+		rect.top = 1300;
 		rect.bottom = 0;
 		rect.right = 0;
 
-		m_object->GetComponent<Transform>()->SetLocalScale({ 8.f, 3.f,1.f });
+		m_object->GetComponent<Transform>()->SetLocalScale({ 1.f, 0.5f, 1.f });
 
 		SpriteRenderer* sprite = m_object->GetComponent<SpriteRenderer>();
 		sprite->SetLayer(10);
 		sprite->SetAssetNum(static_cast<int>(EnumModel::Stamina));
 		sprite->SetRect(rect);
-		sprite->SetSize({ 1, 100 });
+		sprite->SetSize({ 540, 64 });
 
 		m_objects.push_back(m_object);
 	}
@@ -202,12 +201,12 @@ void TitleScene::EditScene(EngineResourceManager* resourceManager, EngineObjectM
 	/// 아이템 상호작용
 	// ItemBox를 열때 상호작용정도를 표시하는 UIs
 	{
-		m_object = m_objManager->CreateObject();
-		m_object->AddComponent<Button, /*SpriteRenderer,*/ ItemInteractionUI>();
+		//m_object = m_objManager->CreateObject();
+		//m_object->AddComponent<Button, /*SpriteRenderer,*/ ItemInteractionUI>();
 
-		//SpriteRenderer* sprite = m_object->GetComponent<SpriteRenderer>();
+		////SpriteRenderer* sprite = m_object->GetComponent<SpriteRenderer>();
 
-		m_objects.push_back(m_object);
+		//m_objects.push_back(m_object);
 	}
 
 	/// 아이템 설명작용
@@ -217,8 +216,8 @@ void TitleScene::EditScene(EngineResourceManager* resourceManager, EngineObjectM
 		m_object->AddComponent<SpriteRenderer, ItemDescUI>();
 
 		RECT rect;
-		rect.left = -400;
-		rect.top = 300;
+		rect.left = 560;
+		rect.top = 70;
 		rect.bottom = 0;
 		rect.right = 0;
 
@@ -262,7 +261,7 @@ void TitleScene::EditScene(EngineResourceManager* resourceManager, EngineObjectM
 		sprite->SetLayer(10);
 		sprite->SetAssetNum(static_cast<int>(EnumModel::Ending_BackGround));
 		sprite->SetRect(rect);
-		sprite->SetSize({ 1890, 1080 });
+		sprite->SetSize({ 1920, 1080 });
 		sprite->DrawInactive();
 
 		// 버튼을 임시변수에 담는다.
@@ -274,8 +273,6 @@ void TitleScene::EditScene(EngineResourceManager* resourceManager, EngineObjectM
 		rect_box.top = 0;
 		rect_box.bottom = 1080;
 		rect_box.right = 1920;
-		// 버튼 크기 적용
-		endingbutton->SetButtonPos(rect_box);
 		SceneManager* t = GetSceneManger();
 		// 버튼 함수 설정
 		endingbutton->SetOnPressed([=]() {
@@ -661,6 +658,7 @@ void TitleScene::EditScene(EngineResourceManager* resourceManager, EngineObjectM
 
 void TitleScene::Awake()
 {
+	
 	{
 		for (auto& e : m_objects)
 		{
@@ -672,29 +670,29 @@ void TitleScene::Awake()
 void TitleScene::Start()
 {
 	GameManager::GetInstance()->Init();
+	InputManager::GetInstance()->SetMouseMode(true);
 	for (auto& e : m_objects)
 	{
 		e->Start();
 	}
-
-	SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBGMChannel());
-	SoundManager::GetInstance().PlayBGM(eSOUNDKIND::bMain);
-	SoundManager::GetInstance().AddReverbParam(SoundManager::GetInstance().GetBGMChannel(), 0.2f);
-	SoundManager::GetInstance().SetPriority(SoundManager::GetInstance().GetBGMChannel(), 0.0f);
+	SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBGMChannel());
+	SoundManager::GetInstance()->PlayBGM(eSOUNDKIND::bMain);
+	SoundManager::GetInstance()->AddReverbParam(SoundManager::GetInstance()->GetBGMChannel(), 0.2f);
+	SoundManager::GetInstance()->SetPriority(SoundManager::GetInstance()->GetBGMChannel(), 0.0f);
 }
 
 void TitleScene::Update(float dTime)
 {
 	int count = 0;
-	for (auto e : SoundManager::GetInstance().GetAudioComps())
+	for (auto e : SoundManager::GetInstance()->GetAudioComps())
 	{
 		// Audio컴포넌트를 가진 애들을 돌면서
 		// 3d사운드 내는 애들의 위치를 업데이트해준다
 		FMOD_VECTOR audioPos = e->GetComponent<AudioComponent>()->GetAudioPos();
-		//SoundManager::GetInstance().UpdateSoundPos(audioPos, e->GetName());
+		//SoundManager::GetInstance()->UpdateSoundPos(audioPos, e->GetName());
 		/// 마지막에 사용할 건 이거
-		SoundManager::GetInstance().UpdateSoundPos(audioPos, count);
-		/*SoundManager::GetInstance().UpdateSoundPos(audioPos, m_channels[count]);
+		SoundManager::GetInstance()->UpdateSoundPos(audioPos, count);
+		/*SoundManager::GetInstance()->UpdateSoundPos(audioPos, m_channels[count]);
 		FMOD_VECTOR vel = { 0.0f, 0.0f, 0.0f };
 		break;*/
 		count++;

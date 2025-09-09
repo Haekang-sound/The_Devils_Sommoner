@@ -80,7 +80,7 @@
     <OutDir>$(SolutionDir)Libraries\DebugLib\MockeryEngine\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)LibrariesReleaseLib\MockeryEngine</OutDir>
+    <OutDir>$(SolutionDir)Libraries\ReleaseLib\MockeryEngine</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,7 +159,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\Libraries\fmod\inc;../x64/Debug;../x64/Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Libraries\fmod\inc;$(SolutionDir)\LibrariesReleaseLib\KSL;$(SolutionDir)\LibrariesReleaseLib\Graphics;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -170,7 +170,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)\Libraries\DebugLib\KSL;$(SolutionDir)\Libraries\DebugLib\Graphics;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Libraries\ReleaseLib\KSL;$(SolutionDir)\Libraries\ReleaseLib\Graphics;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>KestrelSoundLibrary.lib;Graphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>

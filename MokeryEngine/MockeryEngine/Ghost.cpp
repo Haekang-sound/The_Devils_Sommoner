@@ -39,7 +39,7 @@ void Ghost::Start()
 
 	m_enemyState = EnemyState::NONE;
 
-	SoundManager::GetInstance().PlayGhost(eSOUNDKIND::lGhostWalk);
+	SoundManager::GetInstance()->PlayGhost(eSOUNDKIND::lGhostWalk);
 }
 
 void Ghost::FixedUpdate(float dTime)

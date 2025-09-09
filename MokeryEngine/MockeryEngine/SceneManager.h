@@ -39,17 +39,16 @@ private:
 	void AddScene(SceneNumber sceneName);		// scene을 추가한다. 
 
 	// scene내부에서 동작해서 scene이 변경될수있는 모든 경우의 수로 이동한다.
-	void EndScene();							// scene을 종료한다.
-
-	void SetCurrentScene(SceneNumber seceneName);
 
 	/// scene매니저의 필수기능을 담당함
 private:
 	Scene* m_currentScene;	// 현재 Scene
-	Scene* m_newScene;		// 생성을 위한 임시변수
+	Scene* m_NextScene;		// 생성을 위한 임시변수
 
 	// Scene을 맵으로 저장해서 이름으로 불러온다.
 	std::unordered_map<SceneNumber, Scene*> m_sceneMap;
+
+	bool m_IsSceneChanged = true;
 	
 private:
 	//KSL* m_soundKSL;

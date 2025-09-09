@@ -33,7 +33,7 @@ void KnifeItem::UnSelect()
 
 void KnifeItem::Act(GameObject* player)
 {
-	SoundManager::GetInstance().PlaySFX(eSOUNDKIND::fPskill);
+	SoundManager::GetInstance()->PlaySFX(eSOUNDKIND::fPskill);
 
 	KnifeComponent* knifeComponent = m_knifeObject->GetComponent<KnifeComponent>();
 

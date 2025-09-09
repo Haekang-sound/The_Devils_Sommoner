@@ -25,10 +25,10 @@
 #pragma endregion Scene
 
 SceneManager::SceneManager()
-	: m_currentScene(nullptr), m_newScene(nullptr),
+	: m_currentScene(nullptr),
 	m_sceneMap{},
-	m_resourceManager(nullptr), m_objManager(nullptr), m_timeManager(nullptr), // m_inputManager(nullptr),
-	m_renderer(nullptr)//,m_soundKSL(nullptr)
+	m_resourceManager(nullptr), m_objManager(nullptr), m_timeManager(nullptr),
+	m_renderer(nullptr)
 {
 
 }
@@ -58,10 +58,10 @@ void SceneManager::Init(TimeManager* timeManager)//, InputManager* inputManager)
 #pragma region construct
 
 	// 사운드 매니저의 초기화
-	SoundManager::GetInstance().Init();
+	SoundManager::GetInstance()->Init();
 	
 	m_resourceManager = new EngineResourceManager();
-	m_resourceManager->Init(SoundManager::GetInstance().getKSL());
+	m_resourceManager->Init(SoundManager::GetInstance()->getKSL());
 
 	m_objManager = new EngineObjectManager();
 	m_objManager->Init();
@@ -74,7 +74,7 @@ void SceneManager::Init(TimeManager* timeManager)//, InputManager* inputManager)
 	AddScene(SceneNumber::Title);
 
 	// 1. 초기 scene을 설정한다.
-	SetCurrentScene(SceneNumber::Intro);
+	m_currentScene = m_sceneMap[SceneNumber::Intro];
 
 	// 2. 초기 scene의 대한 초기화를 진행한다.
 	//m_currentScene->SetKSL(m_soundManager->getKSL());
@@ -197,7 +197,7 @@ void SceneManager::Update(float dTime)
   	m_currentScene->Update(dTime);
 
 	// 사운드 라이브러리의 대한 업데이트가 필요함
-	SoundManager::GetInstance().Update();
+	SoundManager::GetInstance()->Update();
 }
 
 void SceneManager::LateUpdate(float dTime)
@@ -210,11 +210,34 @@ void SceneManager::LateUpdate(float dTime)
 void SceneManager::Render()
 {
 	m_currentScene->Render();
+	if (m_IsSceneChanged == false)
+	{
+		m_IsSceneChanged = true;
+
+		GameManager::GetInstance()->Finalize();
+		SoundManager::GetInstance()->ClearAudioComps();
+
+		m_objManager->id = 0;
+		m_currentScene->EndLayer(0);
+		m_renderer->DestroyAllObject();
+
+		m_collisionDetectManager->Finalize();
+		m_collisionDetectManager->Init();
+
+		m_physicsManager->Finalize();
+		m_physicsManager->Init();
+
+		m_currentScene = m_NextScene;
+
+		// 바꾼 scene에 대해서 초기화한다. 
+		m_currentScene->EditScene(m_resourceManager, m_objManager, m_timeManager, m_collisionDetectManager, m_physicsManager);
+		m_currentScene->Awake();
+		m_currentScene->Start();
+	}
 }
 
 void SceneManager::Finalize()
 {
-	
 	m_currentScene->End();
 
 	for (auto& e : m_sceneMap)
@@ -231,7 +254,7 @@ void SceneManager::Finalize()
 	m_physicsManager->Finalize();
 	delete m_physicsManager;
 
-	SoundManager::GetInstance().Finalize();
+	SoundManager::GetInstance()->Finalize();
 
 	m_resourceManager->Release();
 	delete m_resourceManager;
@@ -246,19 +269,19 @@ void SceneManager::Finalize()
 /// <param name="sceneName">scene 이름</param>
 void SceneManager::AddScene(SceneNumber sceneName)
 {
+	Scene* scene = nullptr;
 	switch (sceneName)
 	{
 	case SceneNumber::Title:
-		m_newScene = new TitleScene();
+		scene = new TitleScene();
 		break;
 
 	case SceneNumber::Intro:
-		m_newScene = new IntroScene();
+		scene = new IntroScene();
 		break;
 	}
-	m_sceneMap.emplace(m_newScene->GetSceneNum(), m_newScene);
-	m_newScene->SetSceneManger(this);		// sceneManager를 세팅한다
-	m_newScene = nullptr;
+	m_sceneMap.emplace(scene->GetSceneNum(), scene);
+	scene->SetSceneManger(this);		// sceneManager를 세팅한다
 }
 
 /// <summary>
@@ -267,46 +290,16 @@ void SceneManager::AddScene(SceneNumber sceneName)
 /// <param name="seceneName"></param>
 void SceneManager::ChangeScene(SceneNumber nextScene)
 {
-// 	// Scene을 변경할때 같은 씬이면 변경하지 말자
-// 	if (m_currentScene->GetSceneNum() == nextScene)
-// 	{
-// 		return;
-// 	}
-
-	m_objManager->id = 0;
-
-	GameManager::GetInstance()->Finalize();
-	SoundManager::GetInstance().ClearAudioComps();
-
-	m_currentScene->EndLayer(0);
-	m_renderer->DestroyAllObject();
-
-	m_collisionDetectManager->Finalize();
-	m_collisionDetectManager->Init();
-
-	m_physicsManager->Finalize();
-	m_physicsManager->Init();
 
 	
 
-	// 현재 scene을 바꾸고
-	m_currentScene = m_sceneMap[nextScene];
-	m_currentScene->SetRenderer(m_renderer);
+	// 다음 씬 설정.
+	m_NextScene = m_sceneMap[nextScene];
+	m_NextScene->SetRenderer(m_renderer);
 
-	// 바꾼 scene에 대해서 초기화한다. 
-	m_currentScene->EditScene(m_resourceManager, m_objManager, m_timeManager, m_collisionDetectManager, m_physicsManager);// , m_inputManager);
-	m_currentScene->Awake();
-	m_currentScene->Start();
+	m_IsSceneChanged = false;
+
+
 		
-}
-
-void SceneManager::EndScene()
-{
-	m_currentScene->End();
-}
-
-void SceneManager::SetCurrentScene(SceneNumber sceneNum)
-{
-	m_currentScene = m_sceneMap[sceneNum];
 }
 

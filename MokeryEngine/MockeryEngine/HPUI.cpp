@@ -62,7 +62,7 @@ void HPUI::Update(float dTime)
 	{
 		if (!m_isDead)
 		{
-			SoundManager::GetInstance().PlaySFX(eSOUNDKIND::fDead);
+			SoundManager::GetInstance()->PlaySFX(eSOUNDKIND::fDead);
 			m_isDead = true;
 		}
 

@@ -124,7 +124,7 @@
       <AdditionalDependencies>DirectXTK.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>..\Libraries\DXTK\Lib;..\Libraries\Assimp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Libraries\DebugLib\DXTK\Debug;$(SolutionDir)\Libraries\Assimp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <TargetMachine>MachineX64</TargetMachine>
     </Lib>
     <FxCompile>
@@ -163,7 +163,7 @@
     </FxCompile>
     <Lib>
       <AdditionalDependencies>DirectXTK.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\Libraries\DXTK\Lib;..\Libraries\Assimp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\Libraries\DXTK\Release;..\Libraries\Assimp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

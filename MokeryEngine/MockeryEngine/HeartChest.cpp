@@ -55,7 +55,7 @@ void HeartChest::Interact()
 	GetOwner()->GetObjectManager()->GetOBjectsByComponent<Timer>()->GetComponent<Timer>()->AddTime(300.f);
 	Super::Interact();
 	//std::cout << "Heart Chest Interact!" << std::endl;
-	SoundManager::GetInstance().PlaySFXR(eSOUNDKIND::fBox);
+	SoundManager::GetInstance()->PlaySFXR(eSOUNDKIND::fBox);
 
 	GameManager::GetInstance()->GetPlayerObject()->GetComponent<PlayerComponent>()->OnHeart();
 	if (!GameManager::GetInstance()->GetPlayerObject()->GetComponent<PlayerComponent>()->GetGameStart())

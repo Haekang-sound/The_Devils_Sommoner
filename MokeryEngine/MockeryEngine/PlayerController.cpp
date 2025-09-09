@@ -16,12 +16,9 @@ PlayerController::PlayerController()
 {
 	m_inputmanager = InputManager::GetInstance();
 
-	hCursor = LoadCursor(NULL, IDC_HAND); // 여기서 IDC_HAND는 손가락 모양의 커서를 나타냅니다. 필요에 따라 다른 커서를 선택할 수 있습니다.
+	//hCursor = LoadCursor(NULL, IDC_HAND); // 여기서 IDC_HAND는 손가락 모양의 커서를 나타냅니다. 필요에 따라 다른 커서를 선택할 수 있습니다.
 
-	// Set the cursor
-	SetCursor(hCursor);
-	ShowCursor(false);
-
+	RECT screenRect;
 
 }
 
@@ -54,16 +51,14 @@ void PlayerController::Update(float dTime)
 
 	memcpy(&m_RenderView, &m_View, sizeof(SimpleMath::Matrix));
 
-	int width = m_inputmanager->windowRect.right - m_inputmanager->windowRect.left;
-	int cwidth = m_inputmanager->clientRect.right - m_inputmanager->clientRect.left;
-	int height = m_inputmanager->windowRect.bottom - m_inputmanager->windowRect.top;
-	int cheight = m_inputmanager->clientRect.bottom - m_inputmanager->clientRect.top;
-	int xPosition = m_inputmanager->windowRect.left;
-	int yPosition = m_inputmanager->windowRect.top;
+	//int width = m_inputmanager->windowRect.right - m_inputmanager->windowRect.left;
+	//int cwidth = m_inputmanager->clientRect.right - m_inputmanager->clientRect.left;
+	//int height = m_inputmanager->windowRect.bottom - m_inputmanager->windowRect.top;
+	//int cheight = m_inputmanager->clientRect.bottom - m_inputmanager->clientRect.top;
 
-	int menuBarHeight = GetSystemMetrics(SM_CYMENU);
-	int borderWidthX = GetSystemMetrics(SM_CXSIZEFRAME);
-	int borderWidthY = GetSystemMetrics(SM_CYSIZEFRAME);
+	//int menuBarHeight = GetSystemMetrics(SM_CYMENU);
+	//int borderWidthX = GetSystemMetrics(SM_CXSIZEFRAME);
+	//int borderWidthY = GetSystemMetrics(SM_CYSIZEFRAME);
 #pragma region OHKctrl
 	m_moveSpeed = m_pOwner->GetComponent<PlayerComponent>()->GetMoveSpeed();
 
@@ -79,8 +74,8 @@ void PlayerController::Update(float dTime)
 			/// 이속이 두배로 되었을 때도 일로 들어옴
 			if (!isRun && m_moveSpeed > 1.5f)
 			{
-				SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetMoveChannel());
-				SoundManager::GetInstance().PlayerRun();
+				SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetMoveChannel());
+				SoundManager::GetInstance()->PlayerRun();
 				isRun = true;
 				isWalk = false;
 			}
@@ -89,8 +84,8 @@ void PlayerController::Update(float dTime)
 			{
 				if (!isWalk)
 				{
-					SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetMoveChannel());
-					SoundManager::GetInstance().PlayerWalk();
+					SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetMoveChannel());
+					SoundManager::GetInstance()->PlayerWalk();
 					isWalk = true;
 					isRun = false;
 				}
@@ -99,7 +94,7 @@ void PlayerController::Update(float dTime)
 		/// 가만히 있을 때
 		else
 		{
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetMoveChannel());
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetMoveChannel());
 			isWalk = false;
 			isRun = false;
 		}
@@ -151,56 +146,19 @@ void PlayerController::Update(float dTime)
 			m_transform->m_MoveSpeed.x = 0.f;
 		}
 
-		// 
-		// 		// 간이 점프
-		// 		if (m_inputmanager->m_Keyboard.IsKeydown(DirectX::Keyboard::Keys::Space))
-		// 		{
-		// 			m_transform->SetLocalPosition({ m_transform->GetLocalPosition().x, m_transform->GetLocalPosition().y + 5,m_transform->GetLocalPosition().z, });
-		// 		}
-		// 		if (m_inputmanager->m_Keyboard.IsKeyUp(DirectX::Keyboard::Keys::Space))
-		// 		{
-		// 			m_transform->SetLocalPosition({ m_transform->GetLocalPosition().x, m_transform->GetLocalPosition().y - 5,m_transform->GetLocalPosition().z, });
-		// 		}
-
-				// 스케일
-// 		if (m_inputmanager->m_Keyboard.IsKeyHold('R'))
-// 		{
-// 			m_transform->ScaleX(m_moveSpeed * dTime);
-// 		}
-// 		if (m_inputmanager->m_Keyboard.IsKeyHold('T'))
-// 		{
-// 			m_transform->ScaleX(-m_moveSpeed * dTime);
-// 		}
-
 		// 원위치
 		if (m_inputmanager->m_Keyboard.IsKeyHold('X'))
 		{
 			m_transform->GoBack();
 		}
-		// 원위치
-// 		if (m_inputmanager->m_Keyboard.IsKeyHold('Z'))
-// 		{
-// 			m_transform->GoBackPos();
-// 		}
 #pragma endregion OHKctrl
 
 
 		// 마우스 이동의 따른 각도변화
-		if (m_inputmanager->m_Mouse.isMove)
-		{
-			m_transform->Roll(m_inputmanager->m_Mouse.moveX * rotSpeed * dTime);
-			m_transform->Pitch(m_inputmanager->m_Mouse.moveY * rotSpeed * dTime);
+		m_transform->Roll(m_inputmanager->m_Mouse.m_PosX * rotSpeed * dTime);
+		m_transform->Pitch(m_inputmanager->m_Mouse.m_PosY * rotSpeed * dTime);
 
-			// 모니터 상의 절대적인 위치값
-			if (height % 2)
-			{
-				height += 1;
-			}
-			SetCursorPos(xPosition + width / 2, yPosition + height / 2);
-			m_inputmanager->m_Mouse.isMouseCenter = true;
-		}
 	}
-
 	// 컨트롤러 작동 여부를 결정한다
 	if (m_inputmanager->m_Keyboard.IsKeydown('C'))
 	{
@@ -208,11 +166,11 @@ void PlayerController::Update(float dTime)
 		// Show the cursor
 		if (isControl)
 		{
-			ShowCursor(false);
+			InputManager::GetInstance()->SetMouseMode(true);
 		}
 		else
 		{
-			ShowCursor(true);
+			InputManager::GetInstance()->SetMouseMode(false );
 		}
 	}
 }

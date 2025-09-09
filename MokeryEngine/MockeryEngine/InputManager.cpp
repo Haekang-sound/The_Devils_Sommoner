@@ -1,15 +1,14 @@
 #include "pch.h"
 #include "InputManager.h"
-#ifdef _DEBUG
-#include <iostream>
-#endif
 
 
 void InputManager::Init(HWND _hWnd)
 {
 	m_hWnd = _hWnd;
 	m_pMouseData = std::make_unique<DirectX::Mouse>();
+	m_pMouseData.get()->SetWindow(_hWnd);
 	m_pKeyboardData = std::make_unique<DirectX::Keyboard>();
+	m_Mouse.m_hWnd = _hWnd;
 }
 
 void InputManager::Finalize()
@@ -19,14 +18,56 @@ void InputManager::Finalize()
 
 void InputManager::Update()
 {
-	GetWindowRect(m_hWnd, &windowRect);
-	GetClientRect(m_hWnd, &clientRect);
-	m_Keyboard.Update(m_pKeyboardData.get()->GetState());
-	m_Mouse.Update(m_pMouseData.get()->GetState());
-	m_Mouse.MouseMove();
+	// 비효율적인 코드.. 일단 사용함.
+	//GetWindowRect(m_hWnd, &m_Mouse.windowRect);
+	static bool relativeCheck = m_IsMouseRelative;
 
-	std::cout << "(" << m_Mouse.GetLastState().x<< ", " << m_Mouse.GetLastState().y<< ')' << std::endl;
+	if (m_hWnd == GetForegroundWindow())
+	{
+		RECT clientRect{};
+		GetClientRect(m_hWnd, &clientRect);
 
+		static int width{}, height{};
+		width = clientRect.right - 1;
+		height = clientRect.bottom - 1;
+
+		POINT clientPoint{};
+		ClientToScreen(m_hWnd, &clientPoint);
+
+		clientRect.top += clientPoint.y;
+		clientRect.bottom += clientPoint.y;
+		clientRect.left += clientPoint.x;
+		clientRect.right += clientPoint.x;
+
+		ClipCursor(&clientRect);
+
+		m_Keyboard.Update(m_pKeyboardData.get()->GetState());
+		m_Mouse.Update(m_pMouseData.get()->GetState());
+		if (relativeCheck != m_IsMouseRelative)
+		{
+			if (m_IsMouseRelative == true)
+			{
+				m_pMouseData.get()->SetMode(DirectX::Mouse::MODE_RELATIVE);
+			}
+			else
+			{
+				m_pMouseData.get()->SetMode(DirectX::Mouse::MODE_ABSOLUTE);
+			}
+			relativeCheck = m_IsMouseRelative;
+		}
+		m_Mouse.MouseMove(m_IsMouseRelative);
+	}
+	else
+	{
+		ClipCursor(nullptr);
+	}
+
+}
+
+void InputManager::SetMouseMode(bool _IsRelative)
+{
+	m_IsMouseRelative = _IsRelative;
+	
 }
 
 
@@ -67,91 +108,29 @@ bool __cdecl InputManager::Mouse::IsButtonHover(ButtonState _bs) const noexcept
 	return (_bs == UP);
 }
 
-void InputManager::Mouse::MouseMove()
+void InputManager::Mouse::MouseMove(bool _IsRelative)
 {
-	isMove = false;
-	static int x, y;
+	// 마우스 위치를 가져온다.5
+	
 
-	// 마우스 위치를 가져온다.
-	x = GetLastState().x;
-	y = GetLastState().y;
+	m_Curr = GetLastState();
 
-
-
-	// 이전 값이 기본값과 다르면
-	// 현재 x나 y가 이전위치와 다르다면
-	if (isMouseCenter == false)
 	{
-		if ((x != prev.x) || (y != prev.y))
+		m_PosX = m_Curr.x;
+		m_PosY = m_Curr.y;
+		if (_IsRelative == false)
 		{
-			// move 값에 변화량을 입력하고.
-			moveX = x - prev.x;
-			moveY = y - prev.y;
+			RECT rc;
+			GetClientRect(m_hWnd,&rc);
 
-			// 마우스 이동을 true로 바꾼다.
-			isMove = true;
+			m_NormalPosX = m_PosX / rc.right;
+			m_NormalPosY = m_PosY / rc.bottom;
+
 		}
-	}
-	else
-	{
-		moveX = 0;
-		moveY = 0;
-		isMouseCenter = false;
+		
+		
 	}
 
-	prev = GetLastState();
+
+
 }
-
-
-// InputManager::InputManager()
-// 	:m_mousePos{}
-// {
-// 
-// }
-// 
-// InputManager::~InputManager()
-// {
-// 
-// }
-// 
-// void InputManager::Init(HWND hwnd)
-// {
-// 	m_hwnd = hwnd;
-// 	m_states.resize(KEY_TYPE_COUNT, KeyState::None);
-// }
-// 
-// void InputManager::Update()
-// {
-// 	BYTE asciiKeys[KEY_TYPE_COUNT] = {};
-// 	if (::GetKeyboardState(asciiKeys) == false)
-// 		return;
-// 
-// 	for (int key = 0; key < KEY_TYPE_COUNT; key++)
-// 	{
-// 		// 키가 눌려 있으면 true
-// 		if (asciiKeys[key] & 0x80)
-// 		{
-// 			KeyState& state = m_states[key];
-// 
-// 			// 이전 프레임에 키를 누른 상태라면 PRESS
-// 			if (state == KeyState::Press || state == KeyState::Down)
-// 				state = KeyState::Press;
-// 			else
-// 				state = KeyState::Down;
-// 		}
-// 		else
-// 		{
-// 			KeyState& state = m_states[key];
-// 
-// 			// 이전 프레임에 키를 누른 상태라면 UP
-// 			if (state == KeyState::Press || state == KeyState::Down)
-// 				state = KeyState::Up;
-// 			else
-// 				state = KeyState::None;
-// 		}
-// 	}
-// 
-// 	// Mouse
-//  	::GetCursorPos(&m_mousePos); // 커서의 좌표를 알아온다
-// 	::ScreenToClient(m_hwnd, &m_mousePos);
-// }

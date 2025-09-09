@@ -3,8 +3,7 @@
 	#pragma comment(lib, "../Libraries/DebugLib/KSL/KestrelSoundLibrary.lib")
 	#pragma comment(lib, "../Libraries/DebugLib/Graphics/Graphics.lib")
 #else
-#pragma comment(lib, "../Libraries/DebugLib/KSL/KestrelSoundLibrary.lib")
-#pragma comment(lib, "../Libraries/DebugLib/Graphics/Graphics.lib")
+
 #endif
 
 #include <Windows.h>

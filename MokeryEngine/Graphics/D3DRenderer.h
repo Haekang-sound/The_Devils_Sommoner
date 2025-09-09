@@ -38,6 +38,7 @@ public:
 
 	// 창 변환 관련
 	void SetClientSize(int width, int height) override final;
+	Vector2 GetClientSize() override final;
 	void OnResize() override final;
 	void OnResize(int screenWidth, int screenHeight) override final;
 	bool IsValidDevice() override final;
@@ -192,6 +193,15 @@ inline void D3DRenderer::SetClientSize(int width, int height)
 {
 	m_ScreenWidth = width;
 	m_ScreenHeight = height;
+}
+
+inline Vector2 D3DRenderer::GetClientSize()
+{
+	Vector2 result;
+	result.x = m_ScreenWidth;
+	result.y = m_ScreenHeight;
+
+	return result;
 }
 
 // 창 변환 관련

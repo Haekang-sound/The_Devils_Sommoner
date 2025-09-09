@@ -4,9 +4,17 @@
 #include "GameObject.h"
 #include "InputManager.h"
 #include "SoundManager.h"
+#include "SpriteRenderer.h"
+
+
+
+
+
 
 void Button::Start()
 {
+	m_buttonState = ButtonState::Normal;
+	OnNormal();
 }
 
 void Button::FixedUpdate(float dTime)
@@ -15,14 +23,19 @@ void Button::FixedUpdate(float dTime)
 
 void Button::Update(float dTime)
 {
-	
+	//std::cout << m_MousePosInfo.x << " " << m_MousePosInfo.y << std::endl;
+	SimpleMath::Vector4 collider = m_pOwner->GetComponent<SpriteRenderer>()->GetNormalRect();
+	float x, y;
+	auto mouse = InputManager::GetInstance()->m_Mouse;
+	x = mouse.m_NormalPosX;
+	y = mouse.m_NormalPosY;
 	// 기본 이었다면
 	if (m_buttonState != ButtonState::Disabled)
 	{
 		// 조건에 따라 버튼 상태를 점검한다.
 		/// 버튼위에 있는가
-		if (InputManager::GetInstance()->m_Mouse.GetLastState().x > m_pos.left && InputManager::GetInstance()->m_Mouse.GetLastState().x < m_pos.right &&
-			InputManager::GetInstance()->m_Mouse.GetLastState().y > m_pos.top && InputManager::GetInstance()->m_Mouse.GetLastState().y < m_pos.bottom)
+		if (collider.x < x && x < collider.z &&
+			collider.y < y && y < collider.w)
 		{
 			// 좌클릭
 			if (InputManager::GetInstance()->m_Mouse.IsButtonHold(InputManager::GetInstance()->m_Mouse.leftButton))
@@ -89,7 +102,7 @@ void Button::Release()
 void Button::OnClick()
 {
 	m_onClick();
-	SoundManager::GetInstance().PlaySFX(eSOUNDKIND::fClick);
+	SoundManager::GetInstance()->PlaySFX(eSOUNDKIND::fClick);
 }
 
 void Button::OnPressed()
@@ -128,11 +141,6 @@ void Button::SetOnHover(std::function<void(void)> onHover)
 void Button::SetOnNormal(std::function<void(void)> onNormal)
 {
 	m_onNormal = onNormal;
-}
-
-void Button::SetButtonPos(RECT pos)
-{
-	m_pos = pos;
 }
 
 

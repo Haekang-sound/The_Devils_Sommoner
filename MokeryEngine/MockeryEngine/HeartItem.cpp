@@ -85,7 +85,7 @@ void HeartItem::Update(float dTime)
 			{
 				
 				if (GameManager::GetInstance()->GetPlayerObject()->GetComponent<PlayerComponent>()->GetItemState() == 1)
-					SoundManager::GetInstance().PlayDoor0(eSOUNDKIND::fHeart);
+					SoundManager::GetInstance()->PlayDoor0(eSOUNDKIND::fHeart);
 				
 				m_onHeartBeat = true;
 				m_currentHeartBeatTime = 0.f;

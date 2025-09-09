@@ -1,6 +1,7 @@
 #pragma once
 #include "../Libraries/DXTK/Inc/SimpleMath.h"
 #include "../KestrelSoundLibrary/KestrelSoundLibrary.h"
+#include "SingleTon.h"
 #include "GameObject.h"
 #include "EnemyComponent.h"
 
@@ -25,19 +26,11 @@ class IKSL;
 /// 
 /// 2024. 02. 16
 /// </summary>
-class SoundManager
+class SoundManager : public SingleTon<SoundManager>
 {
-private:
+public:
 	SoundManager();
 	~SoundManager();
-
-	/// ╫л╠шео?
-public:
-	static SoundManager& GetInstance()
-	{
-		static SoundManager s;
-		return s;
-	}
 
 
 public:

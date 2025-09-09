@@ -91,9 +91,9 @@ void DemonAltarComponent::Release()
 void DemonAltarComponent::Interact()
 {
 	Super::Interact();
-	SoundManager::GetInstance().PlayDemon();
-	SoundManager::GetInstance().AddReverb(SoundManager::GetInstance().GetDemonChannel());
-	SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetDoor3Channel());
+	SoundManager::GetInstance()->PlayDemon();
+	SoundManager::GetInstance()->AddReverb(SoundManager::GetInstance()->GetDemonChannel());
+	SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetDoor3Channel());
 
 	if (GameManager::GetInstance()->GetPlayerObject()->GetComponent<PlayerComponent>()->GethaveHeart())
 	{

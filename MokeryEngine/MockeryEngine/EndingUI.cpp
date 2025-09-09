@@ -50,14 +50,14 @@ void EndingUI::Update(float dTime)
 			m_sprite->Trigger(1);
 			m_spriteKnife->DrawInactive();
 
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBGMChannel());
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBGMCChannel());
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetMoveChannel());
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetJaneChannel());
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetChaserChannel());
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBlindChannel());
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetGhostChannel());
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetDoor0Channel());
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBGMChannel());
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBGMCChannel());
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetMoveChannel());
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetJaneChannel());
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetChaserChannel());
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBlindChannel());
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetGhostChannel());
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetDoor0Channel());
 		}
 	}
 // 	if (InputManager::GetInstance()->m_Keyboard.IsKeydown('H'))
@@ -74,13 +74,13 @@ void EndingUI::Update(float dTime)
 	   m_timer->StopTimer();
 	   m_timer->m_sprite->DrawInactive();
 		
-	   SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBGMChannel());
-	   SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBGMCChannel());
-	   SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetMoveChannel());
-	   SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetJaneChannel());
-	   SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetChaserChannel());
-	   SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBlindChannel());
-	   SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetGhostChannel());
+	   SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBGMChannel());
+	   SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBGMCChannel());
+	   SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetMoveChannel());
+	   SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetJaneChannel());
+	   SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetChaserChannel());
+	   SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBlindChannel());
+	   SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetGhostChannel());
 	}
 
 }

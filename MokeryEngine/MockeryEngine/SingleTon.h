@@ -3,6 +3,10 @@
 template<typename T>
 class SingleTon
 {
+protected:
+	SingleTon() {}
+	virtual ~SingleTon() {}
+
 public:
 	static T* GetInstance()
 	{

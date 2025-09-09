@@ -40,15 +40,38 @@ public:
     SimpleMath::Matrix* GetWorldTM() { return &m_worldTM; }
     Vector2* GetSize() { return &m_size; }
     Vector2 GetSizeXY() { return m_size; }
-    void SetSize(Vector2 _size) { m_size = _size; }
+    void SetSize(Vector2 _size);
     void SetRect(RECT _rect);
+    void SetPos(int _X, int _Y);
+    void SetPosX(int _X) { m_pos.left = _X; }
+    void SetPosY(int _Y) { m_pos.top = _Y; }
+
+    RECT& const GetRect() { return m_pos; };
+    SimpleMath::Vector4 const GetNormalRect() const { return m_NormalPos; }
     unsigned int* GetSate() { return &m_state; }
-    void SetAssetNum(unsigned int assetNum) { m_assetNum = assetNum; };
+    void SetAssetNum(unsigned int assetNum)
+    {
+        m_assetNum = assetNum;
+#ifdef _DEBUG
+        m_assetNumMin = min(m_assetNum, m_assetNumMin);
+        m_assetNumMax = max(m_assetNum, m_assetNumMax);
+
+        m_CurrAssetNum = m_assetNumMin;
+#endif // _DEBUG
+    };
 	bool GetIsDraw() const { return isDraw; };
 
 private:
     float m_layer = 0.f;   // 그리는 순서를 정하는 레이어 z값으로 하기로 했지만 일단 적는다.
     unsigned int m_assetNum;
+
+#ifdef _DEBUG
+    static UINT m_assetNumMax;
+    static UINT m_assetNumMin;
+    static UINT m_CurrAssetNum;
+#endif // _DEBUG
+
+
     SimpleMath::Matrix m_worldTM = m_worldTM.Identity;
     Vector2 m_size = {100.f, 100.f};
     unsigned int m_state = 0;
@@ -57,6 +80,7 @@ private:
 private:
     Transform* m_transform;
     RECT m_pos; // 위치, 사이즈
+    SimpleMath::Vector4 m_NormalPos; // 정규화 위치, 사이즈
     
 };
 

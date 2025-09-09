@@ -66,7 +66,7 @@ void ItemDescUI::LateUpdate(float dTime)
 			m_sprite->Trigger( static_cast<int>(e->GetItemType()));
 			if (!m_forSound)
 			{
-				SoundManager::GetInstance().PlayDoor1(eSOUNDKIND::fUI);
+				SoundManager::GetInstance()->PlayDoor1(eSOUNDKIND::fUI);
 				m_forSound = true;
 			}
 

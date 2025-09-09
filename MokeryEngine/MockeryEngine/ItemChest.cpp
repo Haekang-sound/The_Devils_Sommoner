@@ -63,7 +63,7 @@ void ItemChest::Update(float dTime)
 			// 체력 전부 회복
 			if (!m_forSound)
 			{
-				SoundManager::GetInstance().PlayDoor2(eSOUNDKIND::fBuff);
+				SoundManager::GetInstance()->PlayDoor2(eSOUNDKIND::fBuff);
 				m_forSound = true;
 			}
 			m_player->SetHp(100.f);
@@ -75,7 +75,7 @@ void ItemChest::Update(float dTime)
 			// TODO : 제단 위치 엑스레이
 			if (!m_forSound)
 			{
-				SoundManager::GetInstance().PlayDoor2(eSOUNDKIND::fBuff);
+				SoundManager::GetInstance()->PlayDoor2(eSOUNDKIND::fBuff);
 				m_forSound = true;
 			}
 			m_passingTime += dTime;
@@ -93,7 +93,7 @@ void ItemChest::Update(float dTime)
 			// 플레이어 이속 증가
 			if (!m_forSound)
 			{
-				SoundManager::GetInstance().PlayDoor2(eSOUNDKIND::fBuff);
+				SoundManager::GetInstance()->PlayDoor2(eSOUNDKIND::fBuff);
 				m_forSound = true;
 			}
 			m_player->SetMoveSpeed(2.f, 4.f);
@@ -112,7 +112,7 @@ void ItemChest::Update(float dTime)
 			// 플레이어 이속 감소
 			if (!m_forSound)
 			{
-				SoundManager::GetInstance().PlayDoor2(eSOUNDKIND::fDebuff);
+				SoundManager::GetInstance()->PlayDoor2(eSOUNDKIND::fDebuff);
 				m_forSound = true;
 			}
 			m_player->SetMoveSpeed(0.5f, 1.f);
@@ -131,7 +131,7 @@ void ItemChest::Update(float dTime)
 			// TODO : 시간 단축 
 			if (!m_forSound)
 			{
-				SoundManager::GetInstance().PlayDoor2(eSOUNDKIND::fDebuff);
+				SoundManager::GetInstance()->PlayDoor2(eSOUNDKIND::fDebuff);
 				m_forSound = true;
 			}
 			//std::cout << "LostTime" << std::endl;
@@ -191,8 +191,8 @@ void ItemChest::Interact()
 	m_staticpassingTime = 0.f;
 	m_passingTime = 0.f;
 	m_itemChestModel->GetComponent<MeshRenderer>()->PlayAnimationOnce(0, false);
-	SoundManager::GetInstance().PlaySFXR(eSOUNDKIND::fBox);
-	//SoundManager::GetInstance().AddReverb(SoundManager::GetInstance().GetSFXRChannel());
+	SoundManager::GetInstance()->PlaySFXR(eSOUNDKIND::fBox);
+	//SoundManager::GetInstance()->AddReverb(SoundManager::GetInstance()->GetSFXRChannel());
 
 }
 

@@ -55,7 +55,7 @@ bool D3DRenderer::Init(int hinst, int hWnd, int screenHeight, int screenWidth, f
 
 	DebugDraw::Initialize(m_pDevice->GetDevice(), m_pDevice->GetDeviceContext());
 
-	m_EngineBuffer.SpriteProjection = DirectX::XMMatrixOrthographicLH(m_ScreenWidth, m_ScreenHeight,5.f,1000.f);
+	m_EngineBuffer.SpriteProjection = DirectX::XMMatrixOrthographicLH(m_ScreenWidth, m_ScreenHeight,0.f,1000.f);
 
 
 	return result;
@@ -410,17 +410,22 @@ void D3DRenderer::LoadSprite(UINT _AssetNum)
 	sprite->m_Vertex.resize(4);
 	sprite->m_Indices.resize(6);
 
-	sprite->m_Vertex[0].m_UVW = { 0,1,0 };
-	sprite->m_Vertex[1].m_UVW = { 1,1,0 };
-	sprite->m_Vertex[2].m_UVW = { 0,0,0 };
-	sprite->m_Vertex[3].m_UVW = { 1,0,0 };
+	sprite->m_Vertex[0].m_UVW = { 0,0,0 };
+	sprite->m_Vertex[1].m_UVW = { 1,0,0 };
+	sprite->m_Vertex[2].m_UVW = { 0,1,0 };
+	sprite->m_Vertex[3].m_UVW = { 1,1,0 };
+
+	sprite->m_Vertex[0].m_Pos = { 0,0,0 };
+	sprite->m_Vertex[1].m_Pos = { 1,0,0 };
+	sprite->m_Vertex[2].m_Pos = { 0,1,0 };
+	sprite->m_Vertex[3].m_Pos = { 1,1,0 };
 
 	sprite->m_Indices[0] = 0;
-	sprite->m_Indices[1] = 2;
-	sprite->m_Indices[2] = 1;
+	sprite->m_Indices[1] = 1;
+	sprite->m_Indices[2] = 2;
 
-	sprite->m_Indices[3] = 2;
-	sprite->m_Indices[4] = 3;
+	sprite->m_Indices[3] = 3;
+	sprite->m_Indices[4] = 2;
 	sprite->m_Indices[5] = 1;
 
 	m_pDevice->CreateVertexBuffer(static_cast<UINT>(sprite->m_Stride * sprite->m_Vertex.size()),sprite->m_Vertex.data(), &sprite->m_pVertexBuffer,true);
@@ -1143,6 +1148,10 @@ void D3DRenderer::DrawSprite()
 				memcpy(&m_Pos, &obj.m_pWorldTM->Position, sizeof(SimpleMath::Vector3));
 				memcpy(&m_Rot, &obj.m_pWorldTM->Rotation, sizeof(SimpleMath::Vector3));
 				memcpy(&m_Scale, &obj.m_pWorldTM->Scale, sizeof(SimpleMath::Vector3));
+
+
+				     
+
 				m_World = (SimpleMath::Matrix::CreateScale(m_Scale) * SimpleMath::Matrix::CreateFromYawPitchRoll(m_Rot) * SimpleMath::Matrix::CreateTranslation(m_Pos));
 			}
 			else
@@ -1153,43 +1162,43 @@ void D3DRenderer::DrawSprite()
 			{
 				if ((asset.second->m_Size.x != obj.m_pSize->x) || (asset.second->m_Size.y != obj.m_pSize->y))
 				{
-					asset.second->m_Size.x = obj.m_pSize->x;
-					asset.second->m_Size.y = obj.m_pSize->y;
-					float x, y, z, width, height;
-					x = m_World._41;
-					y = m_World._42;
-					width = asset.second->m_Size.x;
-					height = asset.second->m_Size.y;
-					z = m_World._43;
-
-					// 일단 좌상단 기준으로 만든다.
-					if (obj.m_IsOriginCenter == false)
-					{
-
-						//[0] = 2;
-						//[1] = 1;
-						//[2] = 0;
-						//
-						//[3] = 1;
-						//[4] = 2;
-						//[5] = 3;
-
-						asset.second->m_Vertex[0].m_Pos = { 0,0,z };
-						asset.second->m_Vertex[1].m_Pos = { width,0,z };
-						asset.second->m_Vertex[2].m_Pos = { 0,height,z };
-						asset.second->m_Vertex[3].m_Pos = { width,height,z };
-					}
-					D3D11_MAPPED_SUBRESOURCE sub{};
-					m_pDevice->GetDeviceContext()->Map(asset.second->m_pVertexBuffer.Get(),0,D3D11_MAP_WRITE_DISCARD,0, &sub);
-
-					for (size_t i = 0; i < asset.second->m_Vertex.size(); i++)
-					{
-						static_cast<StaticVertex*>(sub.pData)[i] = asset.second->m_Vertex[i];
-					}
 					
-
-					m_pDevice->GetDeviceContext()->Unmap(asset.second->m_pVertexBuffer.Get(),0);
+					
 				}
+
+				asset.second->m_Size.x = obj.m_pSize->x * 2;
+				asset.second->m_Size.y = obj.m_pSize->y * 2;
+				float x, y, z, width, height;
+
+				width = asset.second->m_Size.x;
+				height = asset.second->m_Size.y;
+
+				m_World._42 = -m_World._42;
+
+				x = m_World._41;
+				y = m_World._42;
+				z = m_World._43;
+
+
+				// 일단 좌상단 기준으로 만든다.
+				if (obj.m_IsOriginCenter == false)
+				{
+					asset.second->m_Vertex[0].m_Pos = { x,y,z };
+					asset.second->m_Vertex[1].m_Pos = { x + width,y,z };
+					asset.second->m_Vertex[2].m_Pos = { x,(y) - height,z};
+					asset.second->m_Vertex[3].m_Pos = { x + width,(y) - height,z};
+				}
+				
+				D3D11_MAPPED_SUBRESOURCE sub{};
+				m_pDevice->GetDeviceContext()->Map(asset.second->m_pVertexBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &sub);
+
+				for (size_t i = 0; i < asset.second->m_Vertex.size(); i++)
+				{
+					static_cast<StaticVertex*>(sub.pData)[i] = asset.second->m_Vertex[i];
+				}
+
+
+				m_pDevice->GetDeviceContext()->Unmap(asset.second->m_pVertexBuffer.Get(), 0);
 			}
 
 
@@ -1220,82 +1229,3 @@ void D3DRenderer::Finalize()
 #endif // _DEBUG
 
 }
-
-/*
-// 프레임보간.
-SimpleMath::Matrix lerpMatrix;
-{
-	UINT frameNum = _Info->m_Animation[_State].m_Mesh[i].m_Bone[_Node->m_BoneIndex[i] - 1].m_Time.size();
-	UINT currFrame = _Node->m_CurrentFrame % frameNum;
-	UINT nextFrame = (currFrame + 1) % frameNum;
-	double currTime = _Info->m_Animation[_State].m_Mesh[i].m_Bone[_Node->m_BoneIndex[i] - 1].m_Time[currFrame];
-	double nextTime = _Info->m_Animation[_State].m_Mesh[i].m_Bone[_Node->m_BoneIndex[i] - 1].m_Time[nextFrame];
-
-	if (_Time > _Info->m_Animation[_State].m_AnimationFullTime)
-	{
-		_Time -= _Info->m_Animation[_State].m_AnimationFullTime;
-		_Node->m_CurrentFrame = currFrame = nextFrame;
-		nextFrame = (currFrame + 1) % frameNum;
-		currTime = _Info->m_Animation[_State].m_Mesh[i].m_Bone[_Node->m_BoneIndex[i] - 1].m_Time[currFrame];
-		nextTime = _Info->m_Animation[_State].m_Mesh[i].m_Bone[_Node->m_BoneIndex[i] - 1].m_Time[nextFrame];
-	}
-	if ((int)(nextTime * 1000000) == 0)
-	{
-		//nextTime += _Info->m_Animation[_State].m_TickPerFrame;
-		currTime = _Info->m_Animation[_State].m_Mesh[i].m_Bone[_Node->m_BoneIndex[i] - 1].m_Time[nextFrame];
-		nextTime = _Info->m_Animation[_State].m_Mesh[i].m_Bone[_Node->m_BoneIndex[i] - 1].m_Time[(nextFrame + 1) % frameNum];
-								if (_Time > _Info->m_Animation[_State].m_TickPerFrame)
-									{
-										_Frame = currFrame = nextFrame;
-										nextFrame = (currFrame + 1) % frameNum;
-										currTime = _Info->m_Animation[_State].m_Mesh[i].m_Bone[_Node->m_BoneIndex[i] - 1].m_Time[currFrame];
-										nextTime = _Info->m_Animation[_State].m_Mesh[i].m_Bone[_Node->m_BoneIndex[i] - 1].m_Time[nextFrame];
-									}
-	}
-	if (_Time > nextTime)
-	{
-		_Node->m_CurrentFrame = currFrame = nextFrame;
-		nextFrame = (currFrame + 1) % frameNum;
-		currTime = _Info->m_Animation[_State].m_Mesh[i].m_Bone[_Node->m_BoneIndex[i] - 1].m_Time[currFrame];
-		nextTime = _Info->m_Animation[_State].m_Mesh[i].m_Bone[_Node->m_BoneIndex[i] - 1].m_Time[nextFrame];
-	}
-
-
-
-	lerpMatrix = SimpleMath::Matrix::Lerp
-	(_Info->m_Animation[_State].m_Mesh[i].m_Bone[_Node->m_BoneIndex[i] - 1].m_Frame[currFrame],
-		_Info->m_Animation[_State].m_Mesh[i].m_Bone[_Node->m_BoneIndex[i] - 1].m_Frame[nextFrame],
-		(_Time - currTime) / nextTime);
-}
-*/
-/*
-
-//모르겠다.. 일단 이렇게 구현함.
-			if (_Node->m_pWeapon != nullptr)
-			{
-				int boneBufferNum = 0;
-				int boneMatrixNum = 0;
-				for (size_t i = 0; i < _Node->m_BoneIndex.size(); i++)
-				{
-					if (_Node->m_BoneIndex[i] > 0)
-					{
-						boneBufferNum = i; SimpleMath::Matrix::CreateScale(0.1f, 0.1f, 0.1f);
-						boneMatrixNum = _Node->m_BoneIndex[i] - 1;
-						/*m_ObjectBuffer.WorldTransform = (m_BoneBuffer[boneBufferNum].BoneTransform[boneMatrixNum] * _Node->m_WorldMatrix[_Node->m_MeshIndex].Transpose());
-m_ObjectBuffer.WorldTransform = /*SimpleMath::Matrix::CreateScale(0.01f, 0.01f, 0.01f) 
-_Node->m_LocalMatrix *
-_Info->m_Animation[_State].m_Mesh[i].m_Bone[boneMatrixNum].m_OffsetMatrix *
-m_BoneBuffer[boneBufferNum].BoneTransform[boneMatrixNum].Invert().Transpose();
-///m_ObjectBuffer.WorldTransform *= SimpleMath::Matrix::CreateScale(0.1f,0.1f,0.1f);
-
-m_ObjectBuffer.WorldTransform = m_ObjectBuffer.WorldTransform.Transpose();
-//m_ObjectBuffer.WorldTransform = (_Node->m_LocalMatrix.Transpose() * _Node->m_ParentMatrix.Transpose() * m_BoneBuffer[boneBufferNum].BoneTransform[boneMatrixNum].Invert());
-
-break;
-					}
-				}
-
-			}
-			else
-
-*/

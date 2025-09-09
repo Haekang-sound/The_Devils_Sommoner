@@ -109,8 +109,8 @@ void Chaser::Update(float dTime)
 		/// Chase상태라면
 		if (!m_isChase)
 		{
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetBlindChannel());
-			SoundManager::GetInstance().PlayChaser(eSOUNDKIND::lChaserWalk);
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetBlindChannel());
+			SoundManager::GetInstance()->PlayChaser(eSOUNDKIND::lChaserWalk);
 			m_isChase = true;
 			m_isAttack = false;
 		}
@@ -245,7 +245,7 @@ void Chaser::Update(float dTime)
 				/// 재생 중이던 채널의 사운드를 일단 중지
 				if (!m_isAttack)
 				{
-					SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetChaserChannel());
+					SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetChaserChannel());
 					m_isAttack = true;
 					m_isChase = false;
 				}
@@ -263,17 +263,17 @@ void Chaser::Update(float dTime)
 						if (1 <= randomInt && randomInt <= 96)
 						{
 							// 공격 사운드
-							SoundManager::GetInstance().PlayChaser(eSOUNDKIND::fChaserAttack);
+							SoundManager::GetInstance()->PlayChaser(eSOUNDKIND::fChaserAttack);
 						}
 						if (97 <= randomInt && randomInt <= 100)
 						{
 							/// 이스터에그?
-							SoundManager::GetInstance().PlayChaser(eSOUNDKIND::etc1);
+							SoundManager::GetInstance()->PlayChaser(eSOUNDKIND::etc1);
 						}
 
 						hit->GetOwner()->GetComponent<PlayerComponent>()
 							->SetHp(m_player->GetComponent<PlayerComponent>()->GetHp() - m_damage);
-						SoundManager::GetInstance().PlaySFX(eSOUNDKIND::fPhit);
+						SoundManager::GetInstance()->PlaySFX(eSOUNDKIND::fPhit);
 
 						// 시작점
 						SimpleMath::Vector3 enemyPos = m_pOwner->GetComponent<Transform>()->GetPosition();
@@ -359,11 +359,11 @@ void Chaser::Update(float dTime)
 		}
 
 		/// 스턴 하면 일시 중지
-		SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetChaserChannel());
+		SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetChaserChannel());
 		if (!m_isKnifeSound)
 		{
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetChaserChannel());
-			SoundManager::GetInstance().PlayChaser(eSOUNDKIND::fEnemyHit);
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetChaserChannel());
+			SoundManager::GetInstance()->PlayChaser(eSOUNDKIND::fEnemyHit);
 			m_isKnifeSound = true;
 		}
 
@@ -413,9 +413,9 @@ void Chaser::Update(float dTime)
 		// 사망 사운드
 		if (!m_isDead)
 		{
-			SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetChaserChannel());
-			SoundManager::GetInstance().PlayChaser(eSOUNDKIND::fMaleScream);
-			SoundManager::GetInstance().AddReverb(SoundManager::GetInstance().GetChaserChannel());
+			SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetChaserChannel());
+			SoundManager::GetInstance()->PlayChaser(eSOUNDKIND::fMaleScream);
+			SoundManager::GetInstance()->AddReverb(SoundManager::GetInstance()->GetChaserChannel());
 			m_isDead = true;
 		}
 	}

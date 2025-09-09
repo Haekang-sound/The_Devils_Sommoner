@@ -37,7 +37,7 @@ void InteractiveObject::LateUpdate(float dTime)
 	if (!m_isInteract)
 	{
 		m_currentTime = 0.f;
-		//SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetSFXRChannel());
+		//SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetSFXRChannel());
 		m_isInteractSound = false;
 	}
 
@@ -63,15 +63,15 @@ void InteractiveObject::SetLoadTime(float time)
 void InteractiveObject::Interact()
 {
 	m_isInteract = false;
-	SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetSFXRChannel());
+	SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetSFXRChannel());
 }
 
 void InteractiveObject::InteractAddTime(float dTime)
 {
 	if (!m_isInteractSound)
 	{
-		SoundManager::GetInstance().PlaySFXR(eSOUNDKIND::fPact);
-		//SoundManager::GetInstance().AddReverb(SoundManager::GetInstance().GetSFXRChannel());
+		SoundManager::GetInstance()->PlaySFXR(eSOUNDKIND::fPact);
+		//SoundManager::GetInstance()->AddReverb(SoundManager::GetInstance()->GetSFXRChannel());
 		m_isInteractSound = true;
 	}
 	m_isInteract = true;

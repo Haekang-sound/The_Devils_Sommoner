@@ -46,8 +46,8 @@ void Timer::Update(float dTime)
 			m_sprite->DrawInactive();
 			if (m_forSound)
 			{
-				SoundManager::GetInstance().StopSound(SoundManager::GetInstance().GetDoor3Channel());
-				SoundManager::GetInstance().PlaySFX(eSOUNDKIND::fDead);
+				SoundManager::GetInstance()->StopSound(SoundManager::GetInstance()->GetDoor3Channel());
+				SoundManager::GetInstance()->PlaySFX(eSOUNDKIND::fDead);
 				m_forSound = false;
 			}
 		}
@@ -56,7 +56,7 @@ void Timer::Update(float dTime)
 			m_sprite->Trigger(0);
 			if (!m_forSound)
 			{
-				SoundManager::GetInstance().PlayDoor3(eSOUNDKIND::fTimer);
+				SoundManager::GetInstance()->PlayDoor3(eSOUNDKIND::fTimer);
 				m_forSound = true;
 			}
 		}

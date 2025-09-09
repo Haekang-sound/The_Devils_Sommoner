@@ -8,12 +8,18 @@
 #define PCH_H
 
 #ifdef _DEBUG
+
+#include <iostream>
+#define DEBUG_LOG(x) {std::cout << x << " ";}
+
+#else	// _Release
+#define DEBUG_LOG(x) {}
+
 #endif // _DEBUG
 
 
 // 여기에 미리 컴파일하려는 헤더 추가
 #include "framework.h"
-
 
 // 외부 인클루드
 

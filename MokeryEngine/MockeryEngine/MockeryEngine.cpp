@@ -7,6 +7,7 @@
 #include "GameManager.h"
 
 #include "Component.h"
+#include "Button.h"
 
 
 MockeryEngine::MockeryEngine()
@@ -65,8 +66,8 @@ float MockeryEngine::Update()
 // 랜더링은 그래픽스에서 전적으로 담당하기로 하였다.
 void MockeryEngine::Render()
 {
-	m_sceneManager->Render();
 	m_renderer->Render();
+	m_sceneManager->Render();
 }
 
 void MockeryEngine::Finalize()

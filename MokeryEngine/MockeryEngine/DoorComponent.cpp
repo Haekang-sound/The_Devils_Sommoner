@@ -115,11 +115,11 @@ void DoorComponent::Interact()
 		m_doorState = DoorState::Open;
 		m_pOwner->GetComponent<BoxCollision>()->SetCollisionWith(CollisionWith::OnlyRay);
 		int count = 4;
-		for (auto e : SoundManager::GetInstance().GetAudioComps())
+		for (auto e : SoundManager::GetInstance()->GetAudioComps())
 		{
-			if (GetOwner() == SoundManager::GetInstance().GetAudioComps()[count])
+			if (GetOwner() == SoundManager::GetInstance()->GetAudioComps()[count])
 			{
-				SoundManager::GetInstance().DoorOpen(count);
+				SoundManager::GetInstance()->DoorOpen(count);
 				break;
 			}
 			count++;
@@ -129,13 +129,13 @@ void DoorComponent::Interact()
 	{
 		m_doorState = DoorState::Close;
 		m_pOwner->GetComponent<BoxCollision>()->SetCollisionWith(CollisionWith::All);
-		SoundManager::GetInstance().PlaySFX(eSOUNDKIND::fClose);
+		SoundManager::GetInstance()->PlaySFX(eSOUNDKIND::fClose);
 		//int count = 4;
-		/*for (auto e : SoundManager::GetInstance().GetAudioComps())
+		/*for (auto e : SoundManager::GetInstance()->GetAudioComps())
 		{
-			if (GetOwner() == SoundManager::GetInstance().GetAudioComps()[count])
+			if (GetOwner() == SoundManager::GetInstance()->GetAudioComps()[count])
 			{
-				SoundManager::GetInstance().DoorClose(count);
+				SoundManager::GetInstance()->DoorClose(count);
 				continue;
 			}
 			count++;
