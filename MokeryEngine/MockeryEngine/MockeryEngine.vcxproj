@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{fda1c51f-74fd-42fb-b499-f1452b988625}</ProjectGuid>
+    <RootNamespace>MockeryEngine</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)Libraries\DebugLib\MockeryEngine</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)Libraries\DebugLib\MockeryEngine</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)Libraries\DebugLib\MockeryEngine\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)LibrariesReleaseLib\MockeryEngine</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>../core/inc;../x64/Debug;../x64/Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)x64/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>KestrelSoundLibrary.lib;Graphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>../core/inc;../x64/Debug;../x64/Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)x64/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>KestrelSoundLibrary.lib;Graphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\Libraries\fmod\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Libraries\DebugLib\Graphics;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Graphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_NDEBUG;_LIB;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\Libraries\fmod\inc;../x64/Debug;../x64/Release;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Libraries\DebugLib\KSL;$(SolutionDir)\Libraries\DebugLib\Graphics;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>KestrelSoundLibrary.lib;Graphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationBuilder.h" />
+    <ClInclude Include="Animator.h" />
+    <ClInclude Include="AnimatorController.h" />
+    <ClInclude Include="AnimatorControllerBuilder.h" />
+    <ClInclude Include="AStarPathFindComponent.h" />
+    <ClInclude Include="Audio.h" />
+    <ClInclude Include="AudioBuilder.h" />
+    <ClInclude Include="AudioComponent.h" />
+    <ClInclude Include="AudioListener.h" />
+    <ClInclude Include="BitmapBuilder.h" />
+    <ClInclude Include="Blind.h" />
+    <ClInclude Include="BoxCollision.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="Chaser.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="CollisionDetectManager.h" />
+    <ClInclude Include="CommonStructs.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="DemonAltarComponent.h" />
+    <ClInclude Include="DoorComponent.h" />
+    <ClInclude Include="EndingScene.h" />
+    <ClInclude Include="EndingUI.h" />
+    <ClInclude Include="EnemyComponent.h" />
+    <ClInclude Include="EvilFactory.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Ghost.h" />
+    <ClInclude Include="HandItem.h" />
+    <ClInclude Include="HeartChest.h" />
+    <ClInclude Include="HeartComponent.h" />
+    <ClInclude Include="HeartItem.h" />
+    <ClInclude Include="HPUI.h" />
+    <ClInclude Include="InteractiveObject.h" />
+    <ClInclude Include="IntroScene.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemChest.h" />
+    <ClInclude Include="ItemDescUI.h" />
+    <ClInclude Include="ItemInteractionUI.h" />
+    <ClInclude Include="JaneD.h" />
+    <ClInclude Include="KnifeComponent.h" />
+    <ClInclude Include="KnifeController.h" />
+    <ClInclude Include="KnifeItem.h" />
+    <ClInclude Include="KnifeUI.h" />
+    <ClInclude Include="ModelEnum.h" />
+    <ClInclude Include="Move.h" />
+    <ClInclude Include="FBX.h" />
+    <ClInclude Include="FBXBuilder.h" />
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="FSM.h" />
+    <ClInclude Include="IBaseState.h" />
+    <ClInclude Include="IBuilder.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Image.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="IResource.h" />
+    <ClInclude Include="IType.h" />
+    <ClInclude Include="MeshRenderer.h" />
+    <ClInclude Include="MockeryEngine.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="EngineObjectManager.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="PhysicsManager.h" />
+    <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="RandomNumber.h" />
+    <ClInclude Include="RayComponent.h" />
+    <ClInclude Include="Renderable.h" />
+    <ClInclude Include="RenderComponent.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="ResourceCreator.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="ResourceFactory.h" />
+    <ClInclude Include="EngineResourceManager.h" />
+    <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneEnum.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SingleTon.h" />
+    <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="SphereCollision.h" />
+    <ClInclude Include="SpriteRenderer.h" />
+    <ClInclude Include="StaminaUI.h" />
+    <ClInclude Include="TestBuilder.h" />
+    <ClInclude Include="TestComponent.h" />
+    <ClInclude Include="TestGyuComponent.h" />
+    <ClInclude Include="TestScene.h" />
+    <ClInclude Include="TestType.h" />
+    <ClInclude Include="TileMap.h" />
+    <ClInclude Include="TileMapBuilder.h" />
+    <ClInclude Include="TileMapGenerator.h" />
+    <ClInclude Include="TimeManager.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="Transform.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="XRayUI.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationBuilder.cpp" />
+    <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="AnimatorController.cpp" />
+    <ClCompile Include="AnimatorControllerBuilder.cpp" />
+    <ClCompile Include="AStarPathFindComponent.cpp" />
+    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="AudioBuilder.cpp" />
+    <ClCompile Include="AudioComponent.cpp" />
+    <ClCompile Include="AudioListener.cpp" />
+    <ClCompile Include="BitmapBuilder.cpp" />
+    <ClCompile Include="Blind.cpp" />
+    <ClCompile Include="BoxCollision.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="Chaser.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CollisionDetectManager.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="DemonAltarComponent.cpp" />
+    <ClCompile Include="DoorComponent.cpp" />
+    <ClCompile Include="EndingScene.cpp" />
+    <ClCompile Include="EndingUI.cpp" />
+    <ClCompile Include="EnemyComponent.cpp" />
+    <ClCompile Include="EvilFactory.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Ghost.cpp" />
+    <ClCompile Include="HandItem.cpp" />
+    <ClCompile Include="HeartChest.cpp" />
+    <ClCompile Include="HeartComponent.cpp" />
+    <ClCompile Include="HeartItem.cpp" />
+    <ClCompile Include="HPUI.cpp" />
+    <ClCompile Include="InteractiveObject.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemChest.cpp" />
+    <ClCompile Include="ItemDescUI.cpp" />
+    <ClCompile Include="ItemInteractionUI.cpp" />
+    <ClCompile Include="JaneD.cpp" />
+    <ClCompile Include="KnifeComponent.cpp" />
+    <ClCompile Include="KnifeController.cpp" />
+    <ClCompile Include="KnifeItem.cpp" />
+    <ClCompile Include="KnifeUI.cpp" />
+    <ClCompile Include="Move.cpp" />
+    <ClCompile Include="FBX.cpp" />
+    <ClCompile Include="FBXBuilder.cpp" />
+    <ClCompile Include="FSM.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="MeshRenderer.cpp" />
+    <ClCompile Include="MockeryEngine.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="EngineObjectManager.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="PhysicsManager.cpp" />
+    <ClCompile Include="PlayerComponent.cpp" />
+    <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="RandomNumber.cpp" />
+    <ClCompile Include="RayComponent.cpp" />
+    <ClCompile Include="RenderComponent.cpp" />
+    <ClCompile Include="ResourceFactory.cpp" />
+    <ClCompile Include="EngineResourceManager.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="SphereCollision.cpp" />
+    <ClCompile Include="SpriteRenderer.cpp" />
+    <ClCompile Include="StaminaUI.cpp" />
+    <ClCompile Include="TestBuilder.cpp" />
+    <ClCompile Include="TestComponent.cpp" />
+    <ClCompile Include="TestGyuComponent.cpp" />
+    <ClCompile Include="TestScene.cpp" />
+    <ClCompile Include="TestType.cpp" />
+    <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="TileMapBuilder.cpp" />
+    <ClCompile Include="TileMapGenerator.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="XRayUI.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MockeryEngine1.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
