@@ -3,8 +3,8 @@
 
 # 자체 엔진 프로젝트 : The Devils Summoner
 
-실행환경 : 86x, (Debug/Release)
-
+실행환경 : 64x, (Debug)\
+실행파일 : AllInOne.sln\
 게임영상 : https://youtu.be/1XLVDzrFyE4
 
 ## 1. 프로젝트 개요
@@ -23,12 +23,76 @@ GameProcess → GameEngine → SceneManager → Scene → GameObject → Compone
 ### 2.3 리소스 관리 시스템 (Resource Management System)
 사운드, 3D 모델(FBX), 이미지 등 다양한 종류의 게임 리소스를 효율적으로 관리하기 위해 리소스 매니저를 구현했습니다. 이 시스템의 핵심은 템플릿(Template)과 빌더(Builder) 패턴의 활용입니다.
  * 템플릿 기반 로딩: LoadResource<T>() 템플릿 함수를 통해 어떤 타입의 리소스든 일관된 방식으로 로드할 수 있습니다.
+   ```c
+   template<class T>
+   void EngineResourceManager::LoadResource(std::string fileName)
+   { 
+   	m_resourceFactory->SetBuilder<T>();			// 1. 빌더를 세팅한다
+   	m_resourceFactory->Initialize(m_creator);	// 2. 빌더를 초기화 한다.
+   	m_resourceFactory->CreateResource<T>();		// 3. 자료형에 맞는 리소스<T>를 생성한다.
+   	m_resourceFactory->CreateType(fileName);	// 4. 데이터를 생성해서 리소스<T>에 넣는다 .
+   	
+   	m_resourceMap.emplace(fileName, m_resourceFactory->GetResource());// 리소스를 저장한다.
+   }
+   ```   
  * 빌더 패턴: 각 리소스 타입(FBX, Bitmap, Audio 등)에 맞는 빌더 클래스를 만들어 리소스 생성 과정을 캡슐화했습니다. 이 덕분에 새로운 리소스 타입이 추가되더라도 리소스 매니저의 코드를 수정할 필요 없이 새로운 빌더만 추가하면 되어 확장성이 뛰어납니다.
+   ```c
+   class Animation
+   {
+   ...
+   private:
+   	static AnimationBuilder* m_builder;
+   ...
+   };
+   AnimationBuilder* Animation::m_builder = nullptr;
+   ```
+   ```c
+   template <typename T>
+   void ResourceFactory::SetBuilder()
+   {
+   	// 빌더를 찾는다. 
+   	if (FindBuilder<T>())
+   	{
+   		// 빌더를 찾았다면 세팅한다.
+   		currentBuilder = T::m_builder;
+   		return;
+   	}
+   	else
+   	{
+   		// 빌더를 찾지못하면 
+   		// 생성하고 저장한다
+   		T::m_builder = new std::remove_reference_t<decltype(*T::m_builder)>();
+   		// 그리고 세팅한다.
+   		currentBuilder = T::m_builder;
+   	}   
+   }
+   ```
  * 추상화 및 관리: 로드된 모든 리소스는 IResource라는 공통 인터페이스를 통해 추상화되며, map 자료구조에 저장되어 중복 로드를 방지하고 빠르게 접근할 수 있도록 했습니다.
+   ```c
+   class IResource
+   {
+   public:
+   	virtual ~IResource() {};
+   	virtual void SetResource(void* Handle) abstract;
+   	virtual void ReleaseResource() abstract;
+   };
+   ```
+   ```c
+   template <typename T>
+   class Resource : public IResource
+   {
+   public:
+   	virtual void SetResource(void* Handle) override;
+   	virtual void ReleaseResource() override;
+   	T* m_type{};
+   private:
+   
+   };
+   ```
 
  ### 2.4 상호작용 가능한 UI 시스템
 게임의 UI, 특히 버튼(Button) 컴포넌트는 사용자와의 상호작용을 유연하게 처리할 수 있도록 설계했습니다. 버튼은 마우스의 위치를 실시간으로 추적하여 Normal (일반), Hover (마우스 올림), Pressed (누르는 중) 상태를 감지합니다. 가장 큰 특징은 각 상태 변화에 따른 이벤트 처리를 람다(lambda) 함수로 외부에서 주입할 수 있다는 점입니다. SetOnClick(), SetOnHover() 등의 함수를 통해 버튼이 클릭되거나 마우스가 올라왔을 때 실행될 코드를 게임 로직 단에서 간편하게 정의할 수 있어 UI와 로직의 결합도를 낮추고 코드의 가독성을 높였습니다.
- ```
+ ```c
  class Button : public Component
  {
  public:
@@ -55,17 +119,14 @@ GameProcess → GameEngine → SceneManager → Scene → GameObject → Compone
  	std::function<void(void)> m_onNormal = []() {};
  
  	ButtonState m_buttonState;
- };
- 
- 
+ }; 
  ```
  ### 2.5 3D Transform 및 FPS 컨트롤러
  * Transform 컴포넌트: 모든 게임 오브젝트의 3D 공간 내 위치, 회전, 크기를 관리합니다. 
  * FPS 컨트롤러: PlayerController 컴포넌트를 통해 1인칭 시점의 게임 플레이를 구현했습니다. 마우스 움직임에 따라 카메라 시점이 회전하고, 키보드 입력으로 캐릭터가 이동하는 기능을 개발했습니다. 카메라의 회전 각도를 제한하여 비정상적인 움직임을 방지하는 디테일도 추가했습니다.
 
+ ### 2.6 FSM (상태 기계) 구현
+적 AI와 같이 복잡한 행동 패턴을 관리하기 위해 FSM(Finite State Machine, 유한 상태 기계)을 직접 구현했습니다. BaseState 인터페이스를 상속받는 각각의 상태(예: 대기, 추격, 공격) 클래스를 만들고, FSM이 현재 상태에 따라 적절한 로직을 실행하고 조건에 따라 다른 상태로 전환하도록 설계했습니다. 이를 통해 AI의 행동 로직을 체계적으로 관리할 수 있었습니다.
 
-2.6 FSM (상태 기계) 구현
-적 AI와 같이 복잡한 행동 패턴을 관리하기 위해 **FSM(Finite State Machine, 유한 상태 기계)**을 직접 구현했습니다. BaseState 인터페이스를 상속받는 각각의 상태(예: 대기, 추격, 공격) 클래스를 만들고, FSM이 현재 상태에 따라 적절한 로직을 실행하고 조건에 따라 다른 상태로 전환하도록 설계했습니다. 이를 통해 AI의 행동 로직을 체계적으로 관리할 수 있었습니다.
-
-2.7 CRTP 싱글턴 패턴 (CRTP Singleton Pattern)
-엔진 전역에서 단 하나만 존재해야 하는 관리자 클래스들을 위해 **CRTP(Curiously Recurring Template Pattern)**를 이용한 싱글턴 패턴을 도입했습니다. 템플릿으로 만들어진 SingleTon 클래스를 상속받기만 하면 어떤 클래스든 손쉽게 싱글턴으로 만들 수 있어, 코드 중복을 줄이고 일관된 방식으로 싱글턴 객체를 관리할 수 있게 했습니다.
+### 2.7 CRTP 싱글턴 패턴 (CRTP Singleton Pattern)
+엔진 전역에서 단 하나만 존재해야 하는 관리자 클래스들을 위해 CRTP(Curiously Recurring Template Pattern)를 이용한 싱글턴 패턴을 도입했습니다. 템플릿으로 만들어진 SingleTon 클래스를 상속받기만 하면 어떤 클래스든 손쉽게 싱글턴으로 만들 수 있어, 코드 중복을 줄이고 일관된 방식으로 싱글턴 객체를 관리할 수 있게 했습니다.
