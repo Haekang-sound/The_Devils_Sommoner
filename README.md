@@ -14,6 +14,8 @@
  ### 2.1 엔진 아키텍처 및 업데이트 파이프라인
 엔진의 핵심은 매니저(Manager) 시스템과 컴포넌트(Component) 기반 설계에 있습니다. 전체 업데이트 흐름은 
 GameProcess → GameEngine → SceneManager → Scene → GameObject → Component 순서로 명확한 계층 구조를 가집니다. Scene이 활성화되면, 해당 씬에 속한 모든 GameObject들을 순회하며 각 객체가 소유한 Component들의 업데이트 함수를 호출하는 방식으로 동작합니다. 이 구조를 통해 게임의 각 요소가 독립적으로 작동하면서도 전체적으로는 유기적으로 연결되도록 설계했습니다.
+<img width="1440" height="1170" alt="image" src="https://github.com/user-attachments/assets/20d6ad2e-f965-4fd2-9c8f-f56c31e032c9" />
+
 
  ### 2.2 컴포넌트 기반 설계 (Component-Based Design)
 게임 세상에 존재하는 모든 객체(GameObject)는 기능별로 독립된 부품, 즉 컴포넌트의 조합으로 이루어집니다. 모든 컴포넌트는 Component라는 공통 인터페이스를 상속받으며, Update, Render 등 게임 루프와 연동되는 가상 함수들을 가집니다. 예를 들어, 객체의 위치와 회전을 담당하는 Transform, 3D 모델을 화면에 그리는 MeshRenderer, 플레이어의 조작을 처리하는 PlayerController 등 다양한 컴포넌트를 GameObject에 부착하여 원하는 기능을 구현할 수 있습니다. 이 방식은 코드의 재사용성을 높이고 객체의 기능을 유연하게 확장할 수 있게 합니다.
@@ -26,7 +28,37 @@ GameProcess → GameEngine → SceneManager → Scene → GameObject → Compone
 
  ### 2.4 상호작용 가능한 UI 시스템
 게임의 UI, 특히 버튼(Button) 컴포넌트는 사용자와의 상호작용을 유연하게 처리할 수 있도록 설계했습니다. 버튼은 마우스의 위치를 실시간으로 추적하여 Normal (일반), Hover (마우스 올림), Pressed (누르는 중) 상태를 감지합니다. 가장 큰 특징은 각 상태 변화에 따른 이벤트 처리를 람다(lambda) 함수로 외부에서 주입할 수 있다는 점입니다. SetOnClick(), SetOnHover() 등의 함수를 통해 버튼이 클릭되거나 마우스가 올라왔을 때 실행될 코드를 게임 로직 단에서 간편하게 정의할 수 있어 UI와 로직의 결합도를 낮추고 코드의 가독성을 높였습니다.
-
+ ```
+ class Button : public Component
+ {
+ public:
+ 	// 클릭 했을 때 실행할 내용 (미리 람다로 등록해둔 내용 실행)
+ 	void OnClick();
+ 	void OnPressed();	// 눌리는 중
+ 	void OnHover();
+ 	void OnNormal();
+ 
+ 	// 버튼의 사용여부를 정해줘!
+ 	void SetDisabled() { m_buttonState = ButtonState::Disabled; }
+ 	void SetEnable() { m_buttonState = ButtonState::Normal; }
+ 
+ 	void SetOnClick(std::function<void(void)> onClick);
+ 	void SetOnPressed(std::function<void(void)> onPress);
+ 	void SetOnHover(std::function<void(void)> onHover);
+ 	void SetOnNormal(std::function<void(void)> onNormal);
+ 
+ private:
+ 	// 람다를 이용해서 기본값을 넣어주자
+ 	std::function<void(void)> m_onClick = []() {};	
+ 	std::function<void(void)> m_onPress = []() {};
+ 	std::function<void(void)> m_onHover = []() {};
+ 	std::function<void(void)> m_onNormal = []() {};
+ 
+ 	ButtonState m_buttonState;
+ };
+ 
+ 
+ ```
  ### 2.5 3D Transform 및 FPS 컨트롤러
  * Transform 컴포넌트: 모든 게임 오브젝트의 3D 공간 내 위치, 회전, 크기를 관리합니다. 
  * FPS 컨트롤러: PlayerController 컴포넌트를 통해 1인칭 시점의 게임 플레이를 구현했습니다. 마우스 움직임에 따라 카메라 시점이 회전하고, 키보드 입력으로 캐릭터가 이동하는 기능을 개발했습니다. 카메라의 회전 각도를 제한하여 비정상적인 움직임을 방지하는 디테일도 추가했습니다.
